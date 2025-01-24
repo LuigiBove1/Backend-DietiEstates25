@@ -10,9 +10,9 @@ public class Ricerca {
     private String citta;
     private int numeroStanze;
     private String classeEnergetica;
-    private Agenzia agenzia;
+    private Utente utente;
 
-    public Ricerca(int id, int prezzoMinimo, int prezzoMaximo, String tipologia, String citta, int numeroStanze, String classeEnergetica, Agenzia agenzia) {
+    public Ricerca(int id, int prezzoMinimo, int prezzoMaximo, String tipologia, String citta, int numeroStanze, String classeEnergetica, Utente utente) {
         this.id = id;
         this.prezzoMinimo = prezzoMinimo;
         this.prezzoMaximo = prezzoMaximo;
@@ -20,8 +20,9 @@ public class Ricerca {
         this.citta = citta;
         this.numeroStanze = numeroStanze;
         this.classeEnergetica = classeEnergetica;
-        this.agenzia = agenzia;
+        this.utente = utente;
     }
+
 
     public int getId() {
         return id;
@@ -79,12 +80,12 @@ public class Ricerca {
         this.classeEnergetica = classeEnergetica;
     }
 
-    public Agenzia getAgenzia() {
-        return agenzia;
+    public Utente getUtente() {
+        return utente;
     }
 
-    public void setAgenzia(Agenzia agenzia) {
-        this.agenzia = agenzia;
+    public void setUtente(Utente utente) {
+        this.utente = utente;
     }
 
     @Override
@@ -105,7 +106,7 @@ public class Ricerca {
                 ", citta='" + citta + '\'' +
                 ", numeroStanze=" + numeroStanze +
                 ", classeEnergetica='" + classeEnergetica + '\'' +
-                ", agenzia=" + agenzia +
+                ", utente=" + utente +
                 '}';
     }
 }
