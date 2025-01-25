@@ -9,5 +9,10 @@ public class NotificaPromozionale extends Notifica{
         super(id, data, ora, descrizione, utente);
     }
 
+    @Override
+    public String toString() {
+        return "NotificaPromozionale{}";
+    }
+
     public NotificaPromozionale() {}
 }
