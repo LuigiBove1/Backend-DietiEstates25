@@ -9,18 +9,16 @@ public class Inserzione {
     private int prezzo;
     private String foto;
     private String tipologia;
-    private int piano;
     private Immobile immobile;
     private Agente agente;
 
-    public Inserzione(int id, String titolo, String descrizione, int prezzo, String foto, String tipologia, int piano, Immobile immobile, Agente agente) {
+    public Inserzione(int id, String titolo, String descrizione, int prezzo, String foto, String tipologia, Immobile immobile, Agente agente) {
         this.id = id;
         this.titolo = titolo;
         this.descrizione = descrizione;
         this.prezzo = prezzo;
         this.foto = foto;
         this.tipologia = tipologia;
-        this.piano = piano;
         this.immobile = immobile;
         this.agente = agente;
     }
@@ -76,14 +74,6 @@ public class Inserzione {
         this.tipologia = tipologia;
     }
 
-    public int getPiano() {
-        return piano;
-    }
-
-    public void setPiano(int piano) {
-        this.piano = piano;
-    }
-
     public Immobile getImmobile() {
         return immobile;
     }
@@ -117,7 +107,6 @@ public class Inserzione {
                 ", prezzo=" + prezzo +
                 ", foto='" + foto + '\'' +
                 ", tipologia='" + tipologia + '\'' +
-                ", piano=" + piano +
                 ", immobile=" + immobile +
                 ", agente=" + agente +
                 '}';

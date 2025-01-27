@@ -5,12 +5,12 @@ import java.util.Objects;
 public class Offerta {
     private int id;
     private int valore;
-    private boolean esito;
+    private Boolean esito;
     private Utente utente;
     private Agente agente;
     private Inserzione inserzione;
 
-    public Offerta(int id, int valore, boolean esito, Utente utente, Agente agente, Inserzione inserzione) {
+    public Offerta(int id, int valore, Boolean esito, Utente utente, Agente agente, Inserzione inserzione) {
         this.id = id;
         this.valore = valore;
         this.esito = esito;
@@ -19,14 +19,7 @@ public class Offerta {
         this.inserzione = inserzione;
     }
 
-
-    @Override
-    public String toString() {
-        return "Offerta{" +
-                "id=" + id +
-                ", valore=" + valore +
-                ", esito=" + esito +
-                '}';
+    public Offerta(){
     }
 
     public int getId() {
@@ -45,11 +38,11 @@ public class Offerta {
         this.valore = valore;
     }
 
-    public boolean isEsito() {
+    public Boolean getEsito() {
         return esito;
     }
 
-    public void setEsito(boolean esito) {
+    public void setEsito(Boolean esito) {
         this.esito = esito;
     }
 
@@ -83,5 +76,16 @@ public class Offerta {
         Offerta offerta = (Offerta) o;
         return id == offerta.id;
     }
-    public Offerta(){}
+
+    @Override
+    public String toString() {
+        return "Offerta{" +
+                "id=" + id +
+                ", valore=" + valore +
+                ", esito=" + esito +
+                ", utente=" + utente +
+                ", agente=" + agente +
+                ", inserzione=" + inserzione +
+                '}';
+    }
 }

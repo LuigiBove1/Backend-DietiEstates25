@@ -5,12 +5,12 @@ import java.util.Objects;
 public class Controfferta {
     private int id;
     private int valore;
-    private boolean esito;
+    private Boolean esito;
     private Utente utente;
     private Agente agente;
     private Inserzione inserzione;
 
-    public Controfferta(int id, int valore, boolean esito, Utente utente, Agente agente, Inserzione inserzione) {
+    public Controfferta(int id, int valore, Boolean esito, Utente utente, Agente agente, Inserzione inserzione) {
         this.id = id;
         this.valore = valore;
         this.esito = esito;
@@ -18,15 +18,7 @@ public class Controfferta {
         this.agente = agente;
         this.inserzione = inserzione;
     }
-
-
-    @Override
-    public String toString() {
-        return "Offerta{" +
-                "id=" + id +
-                ", valore=" + valore +
-                ", esito=" + esito +
-                '}';
+    public Controfferta() {
     }
 
     public int getId() {
@@ -45,11 +37,11 @@ public class Controfferta {
         this.valore = valore;
     }
 
-    public boolean isEsito() {
+    public Boolean getEsito() {
         return esito;
     }
 
-    public void setEsito(boolean esito) {
+    public void setEsito(Boolean esito) {
         this.esito = esito;
     }
 
@@ -83,5 +75,16 @@ public class Controfferta {
         Controfferta that = (Controfferta) o;
         return id == that.id;
     }
-    public Controfferta() {}
+
+    @Override
+    public String toString() {
+        return "Controfferta{" +
+                "id=" + id +
+                ", valore=" + valore +
+                ", esito=" + esito +
+                ", utente=" + utente +
+                ", agente=" + agente +
+                ", inserzione=" + inserzione +
+                '}';
+    }
 }

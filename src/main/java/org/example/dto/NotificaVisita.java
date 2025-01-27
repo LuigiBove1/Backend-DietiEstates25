@@ -13,8 +13,7 @@ public class NotificaVisita extends Notifica{
         this.visita = visita;
     }
 
-    public NotificaVisita(Visita visita) {
-        this.visita = visita;
+    public NotificaVisita() {
     }
 
     @Override
@@ -39,5 +38,5 @@ public class NotificaVisita extends Notifica{
         NotificaVisita that = (NotificaVisita) o;
         return Objects.equals(visita, that.visita);
     }
-    public NotificaVisita() {}
+
 }

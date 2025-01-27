@@ -19,6 +19,9 @@ public class Notifica {
         this.utente = utente;
     }
 
+    public Notifica() {
+    }
+
     @Override
     public String toString() {
         return "Notifica{" +
@@ -76,5 +79,5 @@ public class Notifica {
         Notifica notifica = (Notifica) o;
         return id == notifica.id;
     }
-    public Notifica() {}
+
 }

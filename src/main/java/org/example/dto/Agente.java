@@ -16,7 +16,8 @@ public class Agente {
         this.password = password;
         this.agenzia = agenzia;
     }
-
+    public Agente() {
+    }
     public String getNome() {
         return nome;
     }
@@ -74,5 +75,5 @@ public class Agente {
         Agente agente = (Agente) o;
         return Objects.equals(email, agente.email);
     }
-    public Agente() {}
+
 }

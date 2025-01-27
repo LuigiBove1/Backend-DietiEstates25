@@ -9,14 +9,15 @@ public class Visita {
     private boolean esito;
     private LocalTime ora;
     private LocalDate data;
-    private NotificaVisita notificaVisita;
 
-    public Visita(int id, boolean esito, LocalTime ora, LocalDate data, NotificaVisita notificaVisita) {
+    public Visita(int id, boolean esito, LocalTime ora, LocalDate data) {
         this.id = id;
         this.esito = esito;
         this.ora = ora;
         this.data = data;
-        this.notificaVisita = notificaVisita;
+    }
+
+    public Visita() {
     }
 
     @Override
@@ -26,7 +27,6 @@ public class Visita {
                 ", esito=" + esito +
                 ", ora=" + ora +
                 ", data=" + data +
-                ", notificaVisita=" + notificaVisita +
                 '}';
     }
 
@@ -62,19 +62,11 @@ public class Visita {
         this.data = data;
     }
 
-    public NotificaVisita getNotificaVisita() {
-        return notificaVisita;
-    }
-
-    public void setNotificaVisita(NotificaVisita notificaVisita) {
-        this.notificaVisita = notificaVisita;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Visita visita = (Visita) o;
         return id == visita.id;
     }
-    public Visita() {}
+
 }

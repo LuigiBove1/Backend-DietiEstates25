@@ -4,16 +4,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class NotificaCorrelazione extends Visita{
+public class NotificaCorrelazione extends Notifica{
     private Correlazione correlazione;
 
-    public NotificaCorrelazione(int id, boolean esito, LocalTime ora, LocalDate data, NotificaVisita notificaVisita, Correlazione correlazione) {
-        super(id, esito, ora, data, notificaVisita);
+    public NotificaCorrelazione(int id, LocalDate data, LocalTime ora, String descrizione, Utente utente, Correlazione correlazione) {
+        super(id, data, ora, descrizione, utente);
         this.correlazione = correlazione;
     }
 
-    public NotificaCorrelazione(Correlazione correlazione) {
-        this.correlazione = correlazione;
+    public NotificaCorrelazione() {
     }
 
     @Override
@@ -38,5 +37,5 @@ public class NotificaCorrelazione extends Visita{
         NotificaCorrelazione that = (NotificaCorrelazione) o;
         return Objects.equals(correlazione, that.correlazione);
     }
-    public NotificaCorrelazione() {}
+
 }

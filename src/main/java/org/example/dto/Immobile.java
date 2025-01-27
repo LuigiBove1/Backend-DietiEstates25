@@ -9,19 +9,21 @@ public class Immobile {
     private int numeroStanze;
     private boolean ascensore;
     private String classeEnergetica;
+    private int piano;
     private String citta;
     private String codicePostale;
-    private double longitude;
     private double latitude;
+    private double longitude;
     private String puntiDiInteresse;
 
-    public Immobile(int id, String indirizzo, int dimensione, int numeroStanze, boolean ascensore, String classeEnergetica, String citta, String codicePostale, double longitude, double latitude, String puntiDiInteresse) {
+    public Immobile(int id, String indirizzo, int dimensione, int numeroStanze, boolean ascensore, String classeEnergetica,int piano, String citta, String codicePostale, double longitude, double latitude, String puntiDiInteresse) {
         this.id = id;
         this.indirizzo = indirizzo;
         this.dimensione = dimensione;
         this.numeroStanze = numeroStanze;
         this.ascensore = ascensore;
         this.classeEnergetica = classeEnergetica;
+        this.piano = piano;
         this.citta = citta;
         this.codicePostale = codicePostale;
         this.longitude = longitude;
@@ -78,6 +80,14 @@ public class Immobile {
 
     public void setClasseEnergetica(String classeEnergetica) {
         this.classeEnergetica = classeEnergetica;
+    }
+
+    public int getPiano() {
+        return piano;
+    }
+
+    public void setPiano(int piano) {
+        this.piano = piano;
     }
 
     public String getCitta() {
@@ -137,6 +147,7 @@ public class Immobile {
                 ", numeroStanze=" + numeroStanze +
                 ", ascensore=" + ascensore +
                 ", classeEnergetica='" + classeEnergetica + '\'' +
+                ", piano=" + piano +
                 ", citta='" + citta + '\'' +
                 ", codicePostale='" + codicePostale + '\'' +
                 ", longitude=" + longitude +
@@ -144,4 +155,6 @@ public class Immobile {
                 ", puntiDiInteresse='" + puntiDiInteresse + '\'' +
                 '}';
     }
+
+
 }
