@@ -13,6 +13,9 @@ public class Amministratore {
         this.agenzia = agenzia;
     }
 
+    public Amministratore() {
+    }
+
     public String getNomeAdmin() {
         return nomeAdmin;
     }

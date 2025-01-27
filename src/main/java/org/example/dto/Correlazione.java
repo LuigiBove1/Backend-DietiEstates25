@@ -19,6 +19,9 @@ public class Correlazione {
         this.ricerca = ricerca;
     }
 
+    public Correlazione() {
+    }
+
     public int getId() {
         return id;
     }

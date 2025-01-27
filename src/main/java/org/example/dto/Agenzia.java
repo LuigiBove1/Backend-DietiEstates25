@@ -13,6 +13,9 @@ public class Agenzia {
         this.indirizzo = indirizzo;
     }
 
+    public Agenzia() {
+    }
+
     public String getNome() {
         return nome;
     }

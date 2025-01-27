@@ -25,6 +25,9 @@ public class Inserzione {
         this.agente = agente;
     }
 
+    public Inserzione() {
+    }
+
     public int getId() {
         return id;
     }

@@ -23,6 +23,9 @@ public class Ricerca {
         this.utente = utente;
     }
 
+    public Ricerca() {
+    }
+
 
     public int getId() {
         return id;

@@ -15,6 +15,9 @@ public class Utente {
         this.password = password;
     }
 
+    public Utente() {
+    }
+
     public String getNome() {
         return nome;
     }

@@ -29,6 +29,9 @@ public class Immobile {
         this.puntiDiInteresse = puntiDiInteresse;
     }
 
+    public Immobile() {
+    }
+
     public int getId() {
         return id;
     }
