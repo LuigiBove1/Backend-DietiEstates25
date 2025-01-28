@@ -1,12 +1,16 @@
 package org.example;
 
 
+import org.example.dao.NotificaDAOPostgres;
 import org.example.dao.UtenteDAOPostgres;
 
-import org.example.dto.Utente;
+import org.example.dto.*;
 import org.example.exceptions.CancellazioneNonRiuscitaException;
 import org.example.exceptions.NonTrovatoException;
+import org.example.interfaccedao.NotificaDAO;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class Starter {
@@ -64,6 +68,7 @@ public class Starter {
         }else{
             System.out.println("Login fallito");
         }
+
 
     }
 }
