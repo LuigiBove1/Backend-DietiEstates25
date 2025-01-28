@@ -1,6 +1,6 @@
 package org.example.dto;
 
-import java.util.Objects;
+
 
 public class Inserzione {
     private int id;

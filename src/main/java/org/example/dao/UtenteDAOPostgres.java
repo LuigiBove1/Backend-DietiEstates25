@@ -4,6 +4,7 @@ import org.example.dto.Utente;
 import org.example.exceptions.*;
 
 import org.example.interfaccedao.UtenteDAO;
+import org.example.utils.CredentialCheckerUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,20 +17,25 @@ public class UtenteDAOPostgres implements UtenteDAO {
 
     public void saveUtente(Utente utente) throws InserimentoNonRiuscitoException
     {
-        Connection conn = getConnection();
-        PreparedStatement preparedStatement;
+        if(CredentialCheckerUtils.checkCredentials(utente.getEmail(), utente.getPassword() ))
+        {
+            Connection conn = getConnection();
+            PreparedStatement preparedStatement;
 
-        try {
-            preparedStatement = conn.prepareStatement("insert into utente values(?,?,?,?)");
-            prepareStatement(utente, preparedStatement);
+            try {
+                preparedStatement = conn.prepareStatement("insert into utente values(?,?,?,?)");
+                prepareStatement(utente, preparedStatement);
 
-            preparedStatement.execute();
-            preparedStatement.close();
-            conn.close();
-        } catch (SQLException throwables) {
-            throw new InserimentoNonRiuscitoException("Inserimento utente non riuscito");
-        }  catch (Exception exception){
-            System.out.println("Errore connessione al db");
+                preparedStatement.execute();
+                preparedStatement.close();
+                conn.close();
+            } catch (SQLException throwables) {
+                throw new InserimentoNonRiuscitoException("Inserimento utente non riuscito");
+            }  catch (Exception exception){
+                System.out.println("Errore connessione al db");
+            }
+        }else{
+            throw new CredenzialiNonValideException("Credenziali inserite non valide");
         }
 
     }

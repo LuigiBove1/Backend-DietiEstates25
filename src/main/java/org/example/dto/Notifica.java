@@ -2,7 +2,7 @@ package org.example.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Objects;
+
 
 public class Notifica {
     private int id;

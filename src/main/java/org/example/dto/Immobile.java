@@ -1,7 +1,5 @@
 package org.example.dto;
 
-import java.util.Objects;
-
 public class Immobile {
     private int id;
     private String indirizzo;
@@ -16,7 +14,9 @@ public class Immobile {
     private double longitude;
     private String puntiDiInteresse;
 
-    public Immobile(int id, String indirizzo, int dimensione, int numeroStanze, boolean ascensore, String classeEnergetica,int piano, String citta, String codicePostale, double longitude, double latitude, String puntiDiInteresse) {
+    public Immobile(int id, String indirizzo, int dimensione, int numeroStanze, boolean ascensore,
+                    String classeEnergetica,int piano, String citta, String codicePostale, double longitude,
+                    double latitude, String puntiDiInteresse) {
         this.id = id;
         this.indirizzo = indirizzo;
         this.dimensione = dimensione;
