@@ -4,7 +4,7 @@ import org.example.dto.Controfferta;
 
 import java.util.List;
 
-public interface ControffertaDao {
+public interface ControffertaDao{
     public Controfferta getControffertaById(int id);
     public boolean saveControfferta(Controfferta controfferta);
     public boolean updateControfferta(Controfferta controfferta);

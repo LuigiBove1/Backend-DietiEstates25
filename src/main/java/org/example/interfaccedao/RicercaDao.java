@@ -3,7 +3,7 @@ import org.example.dto.Ricerca;
 
 import java.util.List;
 
-public interface RicercaDao {
+public interface RicercaDao{
     public Ricerca getRicercaById(int id);
     public boolean saveRicerca(Ricerca ricerca);
     public boolean updateRicerca(Ricerca ricerca);

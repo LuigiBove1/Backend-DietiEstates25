@@ -2,7 +2,7 @@ package org.example.interfaccedao;
 
 import org.example.dto.Utente;
 
-public interface UtenteDao {
+public interface UtenteDao{
     public Utente getUtenteByEmail(String email);
     public boolean saveUtente(Utente utente);
     public boolean updateUtente(Utente utente);

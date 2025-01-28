@@ -2,7 +2,7 @@ package org.example.interfaccedao;
 
 import org.example.dto.Amministratore;
 
-public interface AmministratoreDAO {
+public interface AmministratoreDAO{
 
     public Amministratore getAmministratoreByNomeAdmin(String nomeAdmin);
 

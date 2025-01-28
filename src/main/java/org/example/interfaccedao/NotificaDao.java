@@ -4,7 +4,7 @@ import org.example.dto.Notifica;
 
 import java.util.List;
 
-public interface NotificaDao {
+public interface NotificaDao{
     public Notifica getNotificaById(int id);
     public boolean saveNotifica(Notifica notifica);
     public boolean updateNotifica(Notifica notifica);

@@ -5,7 +5,7 @@ import org.example.dto.Ricerca;
 
 import java.util.List;
 
-public interface InserzioneDAO {
+public interface InserzioneDAO{
 
     public Inserzione getInserzioneById(int id);
 

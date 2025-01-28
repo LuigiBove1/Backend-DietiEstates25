@@ -4,7 +4,7 @@ import org.example.dto.Offerta;
 
 import java.util.List;
 
-public interface OffertaDAO {
+public interface OffertaDAO{
 
     public Offerta getOffertaById(int id);
 

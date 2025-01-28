@@ -2,7 +2,7 @@ package org.example.interfaccedao;
 
 import org.example.dto.Agenzia;
 
-public interface AgenziaDAO {
+public interface AgenziaDAO{
 
     public Agenzia getAgenziaByNome(String agenzia);
 
