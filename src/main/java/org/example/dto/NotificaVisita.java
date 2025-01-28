@@ -19,6 +19,7 @@ public class NotificaVisita extends Notifica{
     @Override
     public String toString() {
         return "NotificaVisita{" +
+                super.toString() +
                 "visita=" + visita +
                 '}';
     }

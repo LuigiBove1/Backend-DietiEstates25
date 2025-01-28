@@ -9,5 +9,5 @@ public interface NotificaDAO {
     public void saveNotifica(Notifica notifica);
     public void updateNotifica(Notifica notifica);
     public void deleteNotificaById(int id);
-    public List<Notifica> getNotificheByUtente(String utente);
+    public List<Notifica> getNotificheByUtente(String email);
 }

@@ -15,6 +15,6 @@ public class NotificaPromozionale extends Notifica{
 
     @Override
     public String toString() {
-        return super.toString()+"NotificaPromozionale{}";
+        return "NotificaPromozionale{ "+ super.toString()+"}";
     }
 }

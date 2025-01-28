@@ -32,7 +32,7 @@ public class UtenteDAOPostgres implements UtenteDAO {
             } catch (SQLException throwables) {
                 throw new InserimentoNonRiuscitoException("Inserimento utente non riuscito");
             }  catch (Exception exception){
-                System.out.println("Errore connessione al db");
+                throw new ConnessioneDataBaseException("Errore connessione al database");
             }
         }else{
             throw new CredenzialiNonValideException("Credenziali inserite non valide");
@@ -145,17 +145,10 @@ public class UtenteDAOPostgres implements UtenteDAO {
             }
             preparedStatement.close();
             conn.close();
-
+            return utenti;
         } catch (SQLException throwables) {
-            System.out.println("Errore esecuzione query get all utenti");
-        }
-        if(utenti.isEmpty())
-        {
             throw new NonTrovatoException("Nessun utente trovato");
-            //lancia exception al controller
         }
-        return utenti;
-
 
     }
 }
