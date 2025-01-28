@@ -9,11 +9,11 @@ public interface InserzioneDAO{
 
     public Inserzione getInserzioneById(int id);
 
-    public boolean saveInserzione(Inserzione inserzione);
+    public void saveInserzione(Inserzione inserzione);
 
-    public boolean updateInserzione(Inserzione inserzione);
+    public void updateInserzione(Inserzione inserzione);
 
-    public boolean deleteInserzioneById(int id);
+    public void deleteInserzioneById(int id);
 
     public List<Inserzione> getInserzioneByParametriMultipli(Ricerca ricerca);
 

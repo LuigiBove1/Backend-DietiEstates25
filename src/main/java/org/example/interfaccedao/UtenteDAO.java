@@ -2,11 +2,11 @@ package org.example.interfaccedao;
 
 import org.example.dto.Utente;
 
-public interface UtenteDao{
+public interface UtenteDAO {
     public Utente getUtenteByEmail(String email);
-    public boolean saveUtente(Utente utente);
-    public boolean updateUtente(Utente utente);
-    public boolean deleteUtenteByEmail(String email);
+    public void saveUtente(Utente utente);
+    public void updateUtente(Utente utente);
+    public void deleteUtenteByEmail(String email);
     public boolean loginUtente(String email, String password);
 
 }

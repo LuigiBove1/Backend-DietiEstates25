@@ -6,10 +6,10 @@ public interface AgenziaDAO{
 
     public Agenzia getAgenziaByNome(String agenzia);
 
-    public boolean saveAgenzia(Agenzia agenzia);
+    public void saveAgenzia(Agenzia agenzia);
 
-    public boolean updateAgenzia(Agenzia agenzia);
+    public void updateAgenzia(Agenzia agenzia);
 
-    public boolean deleteAgenziaByNome(String agenzia);
+    public void deleteAgenziaByNome(String agenzia);
 
 }

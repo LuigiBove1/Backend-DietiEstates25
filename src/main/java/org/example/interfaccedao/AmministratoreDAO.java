@@ -6,14 +6,14 @@ public interface AmministratoreDAO{
 
     public Amministratore getAmministratoreByNomeAdmin(String nomeAdmin);
 
-    public boolean saveAmministratore(Amministratore amministratore);
+    public void saveAmministratore(Amministratore amministratore);
 
-    public boolean updateAmministratore(Amministratore amministratore);
+    public void updateAmministratore(Amministratore amministratore);
 
-    public boolean deleteAmministratoreByNomeAdmin(String nomeAdmin);
+    public void deleteAmministratoreByNomeAdmin(String nomeAdmin);
 
     public boolean loginAdmin(String nomeAdmin, String password);
 
-    public boolean updatePasswordByNomeAdmin(String nomeAdmin, String password);
+    public void updatePasswordByNomeAdmin(String nomeAdmin, String password);
 
 }

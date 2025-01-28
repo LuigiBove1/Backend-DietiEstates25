@@ -8,11 +8,11 @@ public interface OffertaDAO{
 
     public Offerta getOffertaById(int id);
 
-    public boolean saveOfferta(Offerta offerta);
+    public void saveOfferta(Offerta offerta);
 
-    public boolean updateOfferta(Offerta offerta);
+    public void updateOfferta(Offerta offerta);
 
-    public boolean deleteOffertaById(int id);
+    public void deleteOffertaById(int id);
 
     public List<Offerta> getOfferteByUtente(String utente);
 

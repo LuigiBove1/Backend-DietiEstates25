@@ -7,9 +7,9 @@ public interface CorrelazioneDAO{
 
     public Correlazione getCorrelazioneById(int id);
 
-    public boolean saveCorrelazione(Correlazione correlazione);
+    public void saveCorrelazione(Correlazione correlazione);
 
-    public boolean updateCorrelazione(Correlazione correlazione);
+    public void updateCorrelazione(Correlazione correlazione);
 
-    public boolean deleteCorrelazioneById(int id);
+    public void deleteCorrelazioneById(int id);
 }
