@@ -8,13 +8,14 @@ import org.example.exceptions.CancellazioneNonRiuscitaException;
 import org.example.exceptions.InserimentoNonRiuscitoException;
 import org.example.exceptions.NonTrovatoException;
 import org.example.interfaccedao.AgenziaDAO;
+import org.example.interfaccedao.AmministratoreDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AmministratoreDAOPostgresS {
+public class AmministratoreDAOPostgress{
     DBConnection connection;
 
     public void saveAmministratore(Amministratore amministratore) throws InserimentoNonRiuscitoException
@@ -38,7 +39,7 @@ public class AmministratoreDAOPostgresS {
         }
     }
 
-    public void preparedStatement(Amministratore amministratore, PreparedStatement preparedStatement) throws SQLException {
+    private void preparedStatement(Amministratore amministratore, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setString(1, amministratore.getNomeAdmin());
         preparedStatement.setString(2, amministratore.getPassword());
         preparedStatement.setString(3, amministratore.getAgenzia().getNome());
@@ -85,7 +86,7 @@ public class AmministratoreDAOPostgresS {
             throw new AggiornamentoNonRiuscitoException("aggiornamento amministratore non riuscito");
         }
     }
-
+    
     public void deleteAmministratoreByNomeAdmin(String nomeAdmin) throws CancellazioneNonRiuscitaException
     {
         Connection conn = getConnection();
