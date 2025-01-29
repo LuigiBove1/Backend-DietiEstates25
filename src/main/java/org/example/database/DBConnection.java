@@ -51,7 +51,6 @@ public class DBConnection {
             }
         } catch (SQLException | ClassNotFoundException  throwables) {
             System.out.println("Errore connessione al database!");
-            throwables.printStackTrace();
         } catch (FileNotFoundException e) {
             System.out.println("Errore lettura file credenziali!");
         } catch (IOException e) {

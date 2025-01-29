@@ -1,6 +1,6 @@
 package org.example.dto;
 
-import java.util.Objects;
+
 
 public class Offerta {
     private int id;

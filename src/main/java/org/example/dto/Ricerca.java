@@ -1,6 +1,5 @@
 package org.example.dto;
 
-import java.util.Objects;
 
 public class Ricerca {
     private int id;

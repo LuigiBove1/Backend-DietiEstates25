@@ -18,6 +18,7 @@ public class NotificaCorrelazione extends Notifica{
     @Override
     public String toString() {
         return "NotificaCorrelazione{" +
+                super.toString() +
                 "correlazione=" + correlazione +
                 '}';
     }
