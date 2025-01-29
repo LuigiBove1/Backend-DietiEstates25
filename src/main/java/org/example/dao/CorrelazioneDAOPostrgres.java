@@ -40,8 +40,8 @@ public class CorrelazioneDAOPostrgres implements CorrelazioneDAO {
     private void prepareStatement(Correlazione correlazione, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setDate(1, Date.valueOf(correlazione.getData()));
         preparedStatement.setTime(2, Time.valueOf(correlazione.getOra()));
-
-        //Inserire inserzione e ricerca
+        preparedStatement.setInt(3, correlazione.getInserzione().getId());
+        preparedStatement.setInt(4, correlazione.getRicerca().getId());
     }
 
     public  Correlazione getCorrelazioneById(int id) throws NonTrovatoException {
@@ -54,16 +54,24 @@ public class CorrelazioneDAOPostrgres implements CorrelazioneDAO {
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            LocalDate data = resultSet.getDate("data").toLocalDate();
-            LocalTime ora = resultSet.getTime("ora").toLocalTime();
-            correlazione = new Correlazione();
-                  //  (id, data, ora, Inserzione, Ricerca);
-
+            correlazione = extractCorrelazioneFromResultSet(id, resultSet);
             preparedStatement.close();
             conn.close();
         } catch (SQLException throwables) {
             throw new NonTrovatoException("Correlazione non trovato");
         }
+        return correlazione;
+    }
+
+    private Correlazione extractCorrelazioneFromResultSet(int id, ResultSet resultSet) throws SQLException {
+        Correlazione correlazione;
+        LocalDate data = resultSet.getDate("data").toLocalDate();
+        LocalTime ora = resultSet.getTime("ora").toLocalTime();
+        InserzioneDAOPostgres inserzioneDAOPostgres = new InserzioneDAOPostgres();
+        RicercaDAOPostgres ricercaDAOPostgres = new RicercaDAOPostgres();
+        Inserzione inserzione = inserzioneDAOPostgres.getInserzioneById(resultSet.getInt("Inserzione"));
+        Ricerca ricerca = ricercaDAOPostgres.getRicercaById(resultSet.getInt("Ricerca"));
+        correlazione = new Correlazione(id, data, ora, inserzione, ricerca);
         return correlazione;
     }
 

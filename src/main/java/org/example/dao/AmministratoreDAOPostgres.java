@@ -6,13 +6,14 @@ import org.example.dto.Agenzia;
 import org.example.dto.Amministratore;
 import org.example.exceptions.*;
 import org.example.interfaccedao.AgenziaDAO;
+import org.example.interfaccedao.AmministratoreDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AmministratoreDAOPostgres {
+public class AmministratoreDAOPostgres implements AmministratoreDAO {
             DBConnection connection;
 
 

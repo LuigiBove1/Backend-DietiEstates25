@@ -3,11 +3,8 @@ package org.example.dao;
 import org.example.database.DBConnection;
 import org.example.dto.*;
 import org.example.exceptions.*;
-import org.example.interfaccedao.AgenteDAO;
-import org.example.interfaccedao.AgenziaDAO;
-import org.example.interfaccedao.ImmobileDAO;
+import org.example.interfaccedao.RicercaDAO;
 import org.example.interfaccedao.UtenteDAO;
-import org.example.utils.CredentialCheckerUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,9 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.sql.DriverManager.getConnection;
-
-public class RicercaDAOPostgres {
+public class RicercaDAOPostgres implements RicercaDAO {
     DBConnection connection;
 
 
@@ -28,8 +23,10 @@ public class RicercaDAOPostgres {
         PreparedStatement preparedStatement;
 
         try {
-            preparedStatement = conn.prepareStatement("insert into ricerca values(?,?,?,?,?,?,?,?)");
-            preparedStatement(ricerca, preparedStatement);
+            preparedStatement = conn.prepareStatement(
+                    "insert into ricerca (prezzominimo,prezzomassimo,tipologia,citta,numerostanze,classeenergetica,utente) " +
+                            "values(?,?,?,?,?,?,?)");
+            prepareStatement(ricerca, preparedStatement);
             preparedStatement.execute();
             preparedStatement.close();
             conn.close();
@@ -53,16 +50,7 @@ public class RicercaDAOPostgres {
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
 
-            int prezzoMinimo = resultSet.getInt("prezzoMinimo");
-            int prezzoMassimo = resultSet.getInt("prezzoMassimo");
-            String tipologia = resultSet.getString("tipologia");
-            String citta = resultSet.getString("citta");
-            int numeroStanze = resultSet.getInt("numeroStanze");
-            String classeEnergetica = resultSet.getString("classeEnergetica");
-            String utenteRicercato = resultSet.getString("utente");
-            UtenteDAO utenteDAO= new UtenteDAOPostgres();
-            Utente utente = utenteDAO.getUtenteByEmail(utenteRicercato);
-            ricerca = new Ricerca(id, prezzoMinimo, prezzoMassimo, tipologia, citta, numeroStanze, classeEnergetica, utente);
+            ricerca = extractRicercaFromResultSet(id, resultSet);
 
             preparedStatement.close();
             conn.close();
@@ -77,7 +65,7 @@ public class RicercaDAOPostgres {
         PreparedStatement preparedStatement;
         try {
             preparedStatement = conn.prepareStatement("UPDATE Ricerca SET id=?, prezzoMinimo=?, prezzoMassimo=?, tipologia=?, citta=?, numeroStanze=?, classeEnergetica=?, utente=? WHERE id=?");
-            preparedStatement(ricerca, preparedStatement);
+            prepareStatement(ricerca, preparedStatement);
             preparedStatement.execute();
             preparedStatement.close();
             conn.close();
@@ -142,16 +130,15 @@ public class RicercaDAOPostgres {
         return ricerche;
     }
 
-    private void preparedStatement(Ricerca ricerca, PreparedStatement preparedStatement) throws SQLException
+    private void prepareStatement(Ricerca ricerca, PreparedStatement preparedStatement) throws SQLException
     {
-        preparedStatement.setInt(1, ricerca.getId());
-        preparedStatement.setInt(2, ricerca.getPrezzoMinimo());
-        preparedStatement.setInt(3, ricerca.getPrezzoMassimo());
-        preparedStatement.setString(4, ricerca.getTipologia());
-        preparedStatement.setString(5, ricerca.getCitta());
-        preparedStatement.setInt(6, ricerca.getNumeroStanze());
-        preparedStatement.setString(7, ricerca.getClasseEnergetica());
-        preparedStatement.setString(8, ricerca.getUtente().getEmail());
+        preparedStatement.setInt(1, ricerca.getPrezzoMinimo());
+        preparedStatement.setInt(2, ricerca.getPrezzoMassimo());
+        preparedStatement.setString(3, ricerca.getTipologia());
+        preparedStatement.setString(4, ricerca.getCitta());
+        preparedStatement.setInt(5, ricerca.getNumeroStanze());
+        preparedStatement.setString(6, ricerca.getClasseEnergetica());
+        preparedStatement.setString(7, ricerca.getUtente().getEmail());
     }
 
     private Connection getConnection () {

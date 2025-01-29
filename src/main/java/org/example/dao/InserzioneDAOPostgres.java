@@ -11,6 +11,7 @@ import org.example.exceptions.NonTrovatoException;
 import org.example.interfaccedao.AgenteDAO;
 import org.example.interfaccedao.ImmobileDAO;
 import org.example.interfaccedao.InserzioneDAO;
+import org.example.interfaccedao.RicercaDAO;
 import org.example.utils.GeoApifyUtils;
 
 import java.io.IOException;
@@ -117,25 +118,21 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
         PreparedStatement preparedStatement;
         List<Inserzione> inserzioni = new ArrayList<>();
         try{
-//           RicercaDAO ricercaDAO = new RicercaDAOPostgres();
-//           ricercaDAO.saveRicerca(ricerca);
-             preparedStatement=conn.prepareStatement("SELECT inserzione.id, titolo, descrizione, prezzo, foto, tipologia, immobile, agente " +
+            RicercaDAO ricercaDAO = new RicercaDAOPostgres();
+            ricercaDAO.saveRicerca(ricerca);
+            preparedStatement=conn.prepareStatement("SELECT inserzione.id, titolo, descrizione, prezzo, foto, tipologia, immobile, agente " +
                      "FROM Inserzione INNER JOIN immobile ON inserzione.immobile = immobile.id " +
                      "WHERE immobile.citta = ? AND immobile.classeenergetica = ? " +
                      "AND immobile.numerostanze = ? AND inserzione.prezzo >= ? AND inserzione.prezzo <= ? " +
                      "AND inserzione.tipologia = ?");
-                preparedStatement.setString(1, ricerca.getCitta());
-                preparedStatement.setString(2, ricerca.getClasseEnergetica());
-                preparedStatement.setInt(3, ricerca.getNumeroStanze());
-                preparedStatement.setInt(4, ricerca.getPrezzoMinimo());
-                preparedStatement.setInt(5, ricerca.getPrezzoMassimo());
-                preparedStatement.setString(6, ricerca.getTipologia());
-                ResultSet resultSet = preparedStatement.executeQuery();
-                while(resultSet.next()){
-                    int id = resultSet.getInt("id");
-                    inserzioni.add(extractInserzioneFromResultSet(id, resultSet));
-                }
-                preparedStatement.close();
+            preparedStatement.setString(1, ricerca.getCitta());
+            preparedStatement.setString(2, ricerca.getClasseEnergetica());
+            preparedStatement.setInt(3, ricerca.getNumeroStanze());
+            preparedStatement.setInt(4, ricerca.getPrezzoMinimo());
+            preparedStatement.setInt(5, ricerca.getPrezzoMassimo());
+            preparedStatement.setString(6, ricerca.getTipologia());
+            extractResultInInserzioni(preparedStatement, inserzioni);
+            preparedStatement.close();
                 conn.close();
 
 
@@ -160,11 +157,7 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
                     "WHERE inserzione.prezzo >= ? AND inserzione.prezzo <= ? ");
             preparedStatement.setInt(1, minimo);
             preparedStatement.setInt(2, massimo);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
-                int id = resultSet.getInt("id");
-                inserzioni.add(extractInserzioneFromResultSet(id, resultSet));
-            }
+            extractResultInInserzioni(preparedStatement, inserzioni);
             preparedStatement.close();
             conn.close();
 
@@ -189,11 +182,7 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
                     "FROM Inserzione INNER JOIN immobile ON inserzione.immobile = immobile.id " +
                     "WHERE immobile.numerostanze = ? ");
             preparedStatement.setInt(1, numStanze);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
-                int id = resultSet.getInt("id");
-                inserzioni.add(extractInserzioneFromResultSet(id, resultSet));
-            }
+            extractResultInInserzioni(preparedStatement, inserzioni);
             preparedStatement.close();
             conn.close();
 
@@ -218,11 +207,7 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
                     "WHERE immobile.classeenergetica = ? ");
             preparedStatement.setString(1, classeEnergetica);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
-                int id = resultSet.getInt("id");
-                inserzioni.add(extractInserzioneFromResultSet(id, resultSet));
-            }
+            extractResultInInserzioni(preparedStatement, inserzioni);
             preparedStatement.close();
             conn.close();
 
@@ -233,6 +218,14 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
             throw new NonTrovatoException("Nessuna inserzione trovata in base alla classe energetica");
         }
         return inserzioni;
+    }
+
+    private void extractResultInInserzioni(PreparedStatement preparedStatement, List<Inserzione> inserzioni) throws SQLException {
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while(resultSet.next()){
+            int id = resultSet.getInt("id");
+            inserzioni.add(extractInserzioneFromResultSet(id, resultSet));
+        }
     }
 
     @Override
@@ -246,11 +239,7 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
                     "FROM Inserzione INNER JOIN immobile ON inserzione.immobile = immobile.id " +
                     "WHERE immobile.citta = ? ");
             preparedStatement.setString(1, citta);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
-                int id = resultSet.getInt("id");
-                inserzioni.add(extractInserzioneFromResultSet(id, resultSet));
-            }
+            extractResultInInserzioni(preparedStatement, inserzioni);
             preparedStatement.close();
             conn.close();
 
@@ -274,11 +263,7 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
         try {
             preparedStatement = conn.prepareStatement(
                     "SELECT id,titolo, descrizione, prezzo, foto, tipologia, immobile, agente FROM inserzione");
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                inserzioni.add(extractInserzioneFromResultSet(id, resultSet));
-            }
+            extractResultInInserzioni(preparedStatement, inserzioni);
             inserzioniNelRaggio = filtraInserzioniPerIndirizzoRaggio(inserzioni, indirizzo, raggio);
             preparedStatement.close();
             conn.close();
@@ -301,11 +286,7 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
         try {
             preparedStatement = conn.prepareStatement(
                     "SELECT id,titolo, descrizione, prezzo, foto, tipologia, immobile, agente FROM inserzione");
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                inserzioni.add(extractInserzioneFromResultSet(id, resultSet));
-            }
+            extractResultInInserzioni(preparedStatement, inserzioni);
             inserzioniNelRaggio = filtraInserzioni(inserzioni,raggio, latitude,longitude);
             preparedStatement.close();
             conn.close();
@@ -356,11 +337,7 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
                     "FROM Inserzione INNER JOIN immobile ON inserzione.immobile = immobile.id INNER JOIN agente ON inserzione.agente = agente.email " +
                     "WHERE agente.agenzia = ? ");
             preparedStatement.setString(1, agenzia);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
-                int id = resultSet.getInt("id");
-                inserzioni.add(extractInserzioneFromResultSet(id, resultSet));
-            }
+            extractResultInInserzioni(preparedStatement, inserzioni);
             preparedStatement.close();
             conn.close();
 
@@ -385,11 +362,7 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
                     "FROM Inserzione INNER JOIN immobile ON inserzione.immobile = immobile.id INNER JOIN agente ON inserzione.agente = agente.email " +
                     "WHERE agente.email = ? ");
             preparedStatement.setString(1, agente);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
-                int id = resultSet.getInt("id");
-                inserzioni.add(extractInserzioneFromResultSet(id, resultSet));
-            }
+            extractResultInInserzioni(preparedStatement, inserzioni);
             preparedStatement.close();
             conn.close();
 
