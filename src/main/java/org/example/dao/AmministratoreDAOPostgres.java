@@ -3,19 +3,19 @@ package org.example.dao;
 import org.example.database.DBConnection;
 import org.example.dto.Agenzia;
 import org.example.dto.Amministratore;
-import org.example.exceptions.AggiornamentoNonRiuscitoException;
-import org.example.exceptions.CancellazioneNonRiuscitaException;
-import org.example.exceptions.InserimentoNonRiuscitoException;
-import org.example.exceptions.NonTrovatoException;
+import org.example.exceptions.*;
 import org.example.interfaccedao.AgenziaDAO;
+import org.example.interfaccedao.AmministratoreDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AmministratoreDAOPostgresS {
+public class AmministratoreDAOPostgres implements AmministratoreDAO {
     DBConnection connection;
+
+
 
     public void saveAmministratore(Amministratore amministratore) throws InserimentoNonRiuscitoException
     {
@@ -34,7 +34,7 @@ public class AmministratoreDAOPostgresS {
         }catch (SQLException throwables) {
             throw new InserimentoNonRiuscitoException("inserimento amministratore non riuscito");
         }catch (Exception exception) {
-            System.out.println("errore connessione al db");
+            throw new ConnessioneDataBaseException("errore connessione al database");
         }
     }
 
@@ -44,7 +44,8 @@ public class AmministratoreDAOPostgresS {
         preparedStatement.setString(3, amministratore.getAgenzia().getNome());
     }
 
-    public Amministratore getAmmministratoreByNomeAdmin(String nomeAdmin) throws NonTrovatoException
+    @Override
+    public Amministratore getAmministratoreByNomeAdmin(String nomeAdmin) throws NonTrovatoException
     {
         Connection conn = getConnection();
         PreparedStatement preparedStatement;
@@ -58,7 +59,7 @@ public class AmministratoreDAOPostgresS {
             resultSet.next();
             String password = resultSet.getString("password");
             String nomeAgenzia = resultSet.getString("nomeAgenzia");
-            AgenziaDAO agenziaDAO = new AgenziaDAOPostgress();
+            AgenziaDAO agenziaDAO = new AgenziaDAOPostgres();
             Agenzia agenzia = agenziaDAO.getAgenziaByNome(nomeAgenzia);
             amministratore = new Amministratore(nomeAdmin, password, agenzia);
 
@@ -69,7 +70,7 @@ public class AmministratoreDAOPostgresS {
         }
         return amministratore;
     }
-
+    @Override
     public void updateAmministratore(Amministratore amministratore) throws AggiornamentoNonRiuscitoException
     {
         Connection conn = getConnection();
@@ -85,7 +86,7 @@ public class AmministratoreDAOPostgresS {
             throw new AggiornamentoNonRiuscitoException("aggiornamento amministratore non riuscito");
         }
     }
-
+    @Override
     public void deleteAmministratoreByNomeAdmin(String nomeAdmin) throws CancellazioneNonRiuscitaException
     {
         Connection conn = getConnection();
