@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 
-public class CorrelazioneDAOPostrgress implements CorrelazioneDAO {
+public class CorrelazioneDAOPostrgres implements CorrelazioneDAO {
     DBConnection connection;
 
 
