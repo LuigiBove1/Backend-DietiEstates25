@@ -4,12 +4,9 @@ import org.example.database.DBConnection;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+
 import org.example.dto.Visita;
-import org.example.exceptions.AggiornamentoNonRiuscitoException;
-import org.example.exceptions.CancellazioneNonRiuscitaException;
-import org.example.exceptions.InserimentoNonRiuscitoException;
-import org.example.exceptions.NonTrovatoException;
+import org.example.exceptions.*;
 import org.example.interfaccedao.VisitaDAO;
 
 public class VisitaDAOPostgres implements VisitaDAO {
@@ -20,7 +17,7 @@ public class VisitaDAOPostgres implements VisitaDAO {
         PreparedStatement preparedStatement;
 
         try {
-            preparedStatement = conn.prepareStatement("insert into visita values(?,?,?)");
+            preparedStatement = conn.prepareStatement("insert into visita (esito,ora,data) values(?,?,?)");
             prepareStatement(visita, preparedStatement);
 
             preparedStatement.execute();
@@ -29,22 +26,22 @@ public class VisitaDAOPostgres implements VisitaDAO {
         } catch (SQLException throwables) {
             throw new InserimentoNonRiuscitoException("Inserimento visita non riuscito");
         }  catch (Exception exception){
-            System.out.println("Errore connessione al db");
+            throw new ConnessioneDataBaseException("Errore connessione al database");
         }
 
     }
 
     private void prepareStatement(Visita visita, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setBoolean(1, visita.getEsito());
-        preparedStatement.setDate(2, Date.valueOf(visita.getData()));
-        preparedStatement.setTime(3, Time.valueOf(visita.getOra()));
+        preparedStatement.setTime(2, Time.valueOf(visita.getOra()));
+        preparedStatement.setDate(3, Date.valueOf(visita.getData()));
     }
 
     public void updateVisita(Visita visita) throws AggiornamentoNonRiuscitoException {
         Connection conn = getConnection();
         PreparedStatement preparedStatement;
         try {
-            preparedStatement = conn.prepareStatement("UPDATE Visita SET esito = ?, data= ? ,ora= ? WHERE id = ?");
+            preparedStatement = conn.prepareStatement("UPDATE Visita SET esito = ?,ora= ? ,data= ? WHERE id = ?");
             preparedStatement.setInt(4, visita.getId());
             prepareStatement(visita, preparedStatement);
             preparedStatement.execute();

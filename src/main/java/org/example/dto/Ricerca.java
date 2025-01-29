@@ -4,17 +4,17 @@ package org.example.dto;
 public class Ricerca {
     private int id;
     private int prezzoMinimo;
-    private int prezzoMaximo;
+    private int prezzoMassimo;
     private String tipologia;
     private String citta;
     private int numeroStanze;
     private String classeEnergetica;
     private Utente utente;
 
-    public Ricerca(int id, int prezzoMinimo, int prezzoMaximo, String tipologia, String citta, int numeroStanze, String classeEnergetica, Utente utente) {
+    public Ricerca(int id, int prezzoMinimo, int prezzoMassimo, String tipologia, String citta, int numeroStanze, String classeEnergetica, Utente utente) {
         this.id = id;
         this.prezzoMinimo = prezzoMinimo;
-        this.prezzoMaximo = prezzoMaximo;
+        this.prezzoMassimo = prezzoMassimo;
         this.tipologia = tipologia;
         this.citta = citta;
         this.numeroStanze = numeroStanze;
@@ -42,12 +42,12 @@ public class Ricerca {
         this.prezzoMinimo = prezzoMinimo;
     }
 
-    public int getPrezzoMaximo() {
-        return prezzoMaximo;
+    public int getPrezzoMassimo() {
+        return prezzoMassimo;
     }
 
-    public void setPrezzoMaximo(int prezzoMaximo) {
-        this.prezzoMaximo = prezzoMaximo;
+    public void setPrezzoMassimo(int prezzoMassimo) {
+        this.prezzoMassimo = prezzoMassimo;
     }
 
     public String getTipologia() {
@@ -103,7 +103,7 @@ public class Ricerca {
         return "Ricerca{" +
                 "id=" + id +
                 ", prezzoMinimo=" + prezzoMinimo +
-                ", prezzoMaximo=" + prezzoMaximo +
+                ", prezzoMaximo=" + prezzoMassimo +
                 ", tipologia='" + tipologia + '\'' +
                 ", citta='" + citta + '\'' +
                 ", numeroStanze=" + numeroStanze +

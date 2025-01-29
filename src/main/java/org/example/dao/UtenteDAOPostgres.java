@@ -145,10 +145,14 @@ public class UtenteDAOPostgres implements UtenteDAO {
             }
             preparedStatement.close();
             conn.close();
-            return utenti;
+
         } catch (SQLException throwables) {
             throw new NonTrovatoException("Nessun utente trovato");
         }
-
+        if(utenti.isEmpty())
+        {
+            throw new NonTrovatoException("Nessun utente trovato");
+        }
+        return utenti;
     }
 }

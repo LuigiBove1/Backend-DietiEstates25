@@ -15,20 +15,22 @@ public interface InserzioneDAO{
 
     public void deleteInserzioneById(int id);
 
-    public List<Inserzione> getInserzioneByParametriMultipli(Ricerca ricerca);
+    public List<Inserzione> getInserzioniByParametriMultipli(Ricerca ricerca);
 
-    public List<Inserzione> getInserzioneByRangePrezzo(int minimo, int massimo);
+    public List<Inserzione> getInserzioniByRangePrezzo(int minimo, int massimo);
 
-    public List<Inserzione> getInserzioneByNumeroDiStanze(int numStanze);
+    public List<Inserzione> getInserzioniByNumeroDiStanze(int numStanze);
 
-    public List<Inserzione> getInserzioneByClasseEnergetica(String classeEnergetica);
+    public List<Inserzione> getInserzioniByClasseEnergetica(String classeEnergetica);
 
-    public List<Inserzione> getInserzioneByCitta(String citta);
+    public List<Inserzione> getInserzioniByCitta(String citta);
 
-    public List<Inserzione> getInserzioneByIndirizzo(String indirizzo, int raggio);
+    public List<Inserzione> getInserzioniByIndirizzo(String indirizzo, int raggio);
 
-    public List<Inserzione> getInserzioneByAgenzia(String agenzia);
+    public List<Inserzione> getInserzioniByRaggio(double latitude,double longitude,int raggio);
 
-    public List<Inserzione> getInserzioneByAgente(String agente);
+    public List<Inserzione> getInserzioniByAgenzia(String agenzia);
+
+    public List<Inserzione> getInserzioniByAgente(String agente);
 
 }

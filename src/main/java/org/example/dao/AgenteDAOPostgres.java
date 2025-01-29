@@ -3,12 +3,10 @@ package org.example.dao;
 import org.example.database.DBConnection;
 import org.example.dto.Agente;
 import org.example.dto.Agenzia;
-import org.example.exceptions.AggiornamentoNonRiuscitoException;
-import org.example.exceptions.CancellazioneNonRiuscitaException;
-import org.example.exceptions.InserimentoNonRiuscitoException;
-import org.example.exceptions.NonTrovatoException;
+import org.example.exceptions.*;
 import org.example.interfaccedao.AgenteDAO;
 import org.example.interfaccedao.AgenziaDAO;
+import org.example.utils.CredentialCheckerUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,25 +14,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class AgenteDAOPostgress implements AgenteDAO {
+public class AgenteDAOPostgres implements AgenteDAO {
     DBConnection connection;
 
     public void saveAgente(Agente agente) throws InserimentoNonRiuscitoException
     {
-        Connection conn = getConnection();
-        PreparedStatement preparedStatement;
+        if(CredentialCheckerUtils.checkCredentials(agente.getEmail(), agente.getPassword() )) {
+            Connection conn = getConnection();
+            PreparedStatement preparedStatement;
 
-        try {
-            preparedStatement = conn.prepareStatement("insert into agente values(?,?,?,?,?)");
-            prepareStatement(agente, preparedStatement);
+            try {
+                preparedStatement = conn.prepareStatement("insert into agente values(?,?,?,?,?)");
+                prepareStatement(agente, preparedStatement);
 
-            preparedStatement.execute();
-            preparedStatement.close();
-            conn.close();
-        } catch (SQLException throwables) {
-            throw new InserimentoNonRiuscitoException("Inserimento agente non riuscito");
-        }  catch (Exception exception){
-            System.out.println("Errore connessione al db");
+                preparedStatement.execute();
+                preparedStatement.close();
+                conn.close();
+            } catch (SQLException throwables) {
+                throw new InserimentoNonRiuscitoException("Inserimento agente non riuscito");
+            } catch (Exception exception) {
+                throw new ConnessioneDataBaseException("Errore connessione al database");
+            }
+        }else {
+            throw new InserimentoNonRiuscitoException("Inserimento agente non riuscito: credenziali non valide");
         }
 
     }
@@ -53,7 +55,7 @@ public class AgenteDAOPostgress implements AgenteDAO {
         ResultSet resultSet;
         Agente agente;
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM Agente WHERE utente.email = ?");
+            preparedStatement = conn.prepareStatement("SELECT * FROM Agente WHERE agente.email = ?");
             preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -61,8 +63,8 @@ public class AgenteDAOPostgress implements AgenteDAO {
             String cognome = resultSet.getString("cognome");
             String password = resultSet.getString("password");
             String nomeAgenzia = resultSet.getString("agenzia");
-            AgenziaDAO agenziaDAO= new AgenziaDAOPostgress();
-            Agenzia agenzia = agenziaDAO.getAgenziaByNome(nome);
+            AgenziaDAO agenziaDAO= new AgenziaDAOPostgres();
+            Agenzia agenzia = agenziaDAO.getAgenziaByNome(nomeAgenzia);
             agente = new Agente(nome,cognome,email,password,agenzia);
 
             preparedStatement.close();
@@ -79,7 +81,7 @@ public class AgenteDAOPostgress implements AgenteDAO {
         PreparedStatement preparedStatement;
         try {
             preparedStatement = conn.prepareStatement("UPDATE Agente SET nome = ?, cognome = ?, password = ?, agenzia = ? WHERE email = ?");
-            prepareStatement(agente, preparedStatement);
+            prepareStatementUpdate(agente, preparedStatement);
             preparedStatement.execute();
             preparedStatement.close();
             conn.close();
