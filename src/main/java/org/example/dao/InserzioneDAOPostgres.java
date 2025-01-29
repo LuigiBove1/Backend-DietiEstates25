@@ -13,6 +13,7 @@ import org.example.interfaccedao.ImmobileDAO;
 import org.example.interfaccedao.InserzioneDAO;
 import org.example.utils.GeoApifyUtils;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.Connection;
@@ -269,7 +270,7 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
         Connection conn = connection.getConnection();
         PreparedStatement preparedStatement;
         List<Inserzione> inserzioni = new ArrayList<>();
-        List<Inserzione> inserzioniNelRaggio = new ArrayList<>();
+        List<Inserzione> inserzioniNelRaggio;
         try {
             preparedStatement = conn.prepareStatement(
                     "SELECT id,titolo, descrizione, prezzo, foto, tipologia, immobile, agente FROM inserzione");
@@ -296,7 +297,7 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
         Connection conn = connection.getConnection();
         PreparedStatement preparedStatement;
         List<Inserzione> inserzioni = new ArrayList<>();
-        List<Inserzione> inserzioniNelRaggio = new ArrayList<>();
+        List<Inserzione> inserzioniNelRaggio;
         try {
             preparedStatement = conn.prepareStatement(
                     "SELECT id,titolo, descrizione, prezzo, foto, tipologia, immobile, agente FROM inserzione");
@@ -320,11 +321,11 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
 
 
     private List<Inserzione> filtraInserzioniPerIndirizzoRaggio(List<Inserzione> inserzioni, String indirizzo, int raggio) {
-        List<Inserzione> inserzioniNelRaggio = new ArrayList<>();
+        List<Inserzione> inserzioniNelRaggio;
         double[] coordinates;
         try{
             coordinates= GeoApifyUtils.addressToCoordinatesDouble(indirizzo);
-        }catch(Exception e){
+        }catch(IOException | InterruptedException e){
             throw new NonTrovatoException("Coordinate non trovate");
         }
         double lat1=coordinates[0];

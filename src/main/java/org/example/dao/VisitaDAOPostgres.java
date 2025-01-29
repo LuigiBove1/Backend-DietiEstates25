@@ -24,7 +24,6 @@ public class VisitaDAOPostgres implements VisitaDAO {
             preparedStatement.close();
             conn.close();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
             throw new InserimentoNonRiuscitoException("Inserimento visita non riuscito");
         }  catch (Exception exception){
             throw new ConnessioneDataBaseException("Errore connessione al database");
