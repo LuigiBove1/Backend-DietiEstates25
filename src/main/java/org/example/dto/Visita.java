@@ -38,7 +38,7 @@ public class Visita {
         this.id = id;
     }
 
-    public boolean isEsito() {
+    public boolean getEsito() {
         return esito;
     }
 
