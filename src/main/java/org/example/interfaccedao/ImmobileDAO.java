@@ -3,8 +3,8 @@ package org.example.interfaccedao;
 import org.example.dto.Immobile;
 
 public interface ImmobileDAO {
-    public Immobile getImmobileById(int id);
-    public void saveImmobile(Immobile immobile);
-    public void updateImmobile(Immobile immobile);
-    public void deleteImmobileById(int id);
+    Immobile getImmobileById(int id);
+    void saveImmobile(Immobile immobile);
+    void updateImmobile(Immobile immobile);
+    void deleteImmobileById(int id);
 }

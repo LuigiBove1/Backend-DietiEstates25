@@ -7,30 +7,30 @@ import java.util.List;
 
 public interface InserzioneDAO{
 
-    public Inserzione getInserzioneById(int id);
+    Inserzione getInserzioneById(int id);
 
-    public void saveInserzione(Inserzione inserzione);
+    void saveInserzione(Inserzione inserzione);
 
-    public void updateInserzione(Inserzione inserzione);
+    void updateInserzione(Inserzione inserzione);
 
-    public void deleteInserzioneById(int id);
+    void deleteInserzioneById(int id);
 
-    public List<Inserzione> getInserzioniByParametriMultipli(Ricerca ricerca);
+    List<Inserzione> getInserzioniByParametriMultipli(Ricerca ricerca);
 
-    public List<Inserzione> getInserzioniByRangePrezzo(int minimo, int massimo);
+    List<Inserzione> getInserzioniByRangePrezzo(int minimo, int massimo);
 
-    public List<Inserzione> getInserzioniByNumeroDiStanze(int numStanze);
+    List<Inserzione> getInserzioniByNumeroDiStanze(int numStanze);
 
-    public List<Inserzione> getInserzioniByClasseEnergetica(String classeEnergetica);
+    List<Inserzione> getInserzioniByClasseEnergetica(String classeEnergetica);
 
-    public List<Inserzione> getInserzioniByCitta(String citta);
+    List<Inserzione> getInserzioniByCitta(String citta);
 
-    public List<Inserzione> getInserzioniByIndirizzo(String indirizzo, int raggio);
+    List<Inserzione> getInserzioniByIndirizzo(String indirizzo, int raggio);
 
-    public List<Inserzione> getInserzioniByRaggio(double latitude,double longitude,int raggio);
+    List<Inserzione> getInserzioniByRaggio(double latitude,double longitude,int raggio);
 
-    public List<Inserzione> getInserzioniByAgenzia(String agenzia);
+    List<Inserzione> getInserzioniByAgenzia(String agenzia);
 
-    public List<Inserzione> getInserzioniByAgente(String agente);
+    List<Inserzione> getInserzioniByAgente(String agente);
 
 }

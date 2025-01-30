@@ -4,12 +4,12 @@ package org.example.dto;
 public class Controfferta {
     private int id;
     private int valore;
-    private Boolean esito;
+    private String esito;
     private Utente utente;
     private Agente agente;
     private Inserzione inserzione;
 
-    public Controfferta(int id, int valore, Boolean esito, Utente utente, Agente agente, Inserzione inserzione) {
+    public Controfferta(int id, int valore, String esito, Utente utente, Agente agente, Inserzione inserzione) {
         this.id = id;
         this.valore = valore;
         this.esito = esito;
@@ -36,11 +36,11 @@ public class Controfferta {
         this.valore = valore;
     }
 
-    public Boolean getEsito() {
+    public String getEsito() {
         return esito;
     }
 
-    public void setEsito(Boolean esito) {
+    public void setEsito(String esito) {
         this.esito = esito;
     }
 

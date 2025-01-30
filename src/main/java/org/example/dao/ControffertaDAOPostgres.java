@@ -45,7 +45,7 @@ public class ControffertaDAOPostgres implements ControffertaDAO {
     private Controfferta extractControffertaFromResultSet(int id, ResultSet resultSet) throws SQLException {
         Controfferta controfferta;
         int valore = resultSet.getInt("valore");
-        Boolean esito = resultSet.getBoolean("esito");
+        String esito = resultSet.getString("esito");
         UtenteDAOPostgres utenteDAOPostgres = new UtenteDAOPostgres();
         AgenteDAOPostgres agenteDAOPostgres = new AgenteDAOPostgres();
         InserzioneDAOPostgres inserzioneDAOPostgres = new InserzioneDAOPostgres();
@@ -73,7 +73,7 @@ public class ControffertaDAOPostgres implements ControffertaDAO {
 
     private void prepareStatement(Controfferta controfferta, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setInt(1, controfferta.getValore());
-        preparedStatement.setBoolean(2, controfferta.getEsito());
+        preparedStatement.setString(2, controfferta.getEsito());
         preparedStatement.setString(3, controfferta.getUtente().getEmail());
         preparedStatement.setString(4, controfferta.getAgente().getEmail());
         preparedStatement.setInt(5, controfferta.getInserzione().getId());
@@ -132,7 +132,7 @@ public class ControffertaDAOPostgres implements ControffertaDAO {
     }
 
     @Override
-    public List<Controfferta> getControffertaByAgente(String agente) {
+    public List<Controfferta> getControffertaByAgente(String agente) throws NonTrovatoException {
         Connection conn = getConnection();
         PreparedStatement preparedStatement;
         ArrayList<Controfferta> controfferte = new ArrayList<>();
@@ -150,6 +150,22 @@ public class ControffertaDAOPostgres implements ControffertaDAO {
             throw new NonTrovatoException("Controfferte ricevute da" + agente + "non trovate");
         }
         return controfferte;
+    }
+
+    @Override
+    public void updateEsitoById(int id, String esito) throws AggiornamentoNonRiuscitoException {
+        Connection conn = getConnection();
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = conn.prepareStatement("UPDATE controfferta SET esito=? WHERE controfferta.id=?");
+            preparedStatement.setString(1, esito);
+            preparedStatement.setInt(2, id);
+            preparedStatement.execute();
+            preparedStatement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new AggiornamentoNonRiuscitoException("Aggiornamento esito non riuscito");
+        }
     }
 
     private void extractAllFromResultSet(ResultSet resultSet, ArrayList<Controfferta> controfferte) throws SQLException {

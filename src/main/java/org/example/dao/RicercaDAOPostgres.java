@@ -31,11 +31,11 @@ public class RicercaDAOPostgres implements RicercaDAO {
             preparedStatement.close();
             conn.close();
         }catch (SQLException throwables) {
-            throw new InserimentoNonRiuscitoException("Inserimento agente non riuscito");
+            throw new InserimentoNonRiuscitoException("Inserimento ricerca non riuscito");
         }catch (Exception exception) {
             throw new ConnessioneDataBaseException("Errore connessione al database");
         }
-            throw new InserimentoNonRiuscitoException("Inserimento agente non riuscito: credenziali non valide");
+
 
     }
 
@@ -64,8 +64,9 @@ public class RicercaDAOPostgres implements RicercaDAO {
         Connection conn = getConnection();
         PreparedStatement preparedStatement;
         try {
-            preparedStatement = conn.prepareStatement("UPDATE Ricerca SET id=?, prezzoMinimo=?, prezzoMassimo=?, tipologia=?, citta=?, numeroStanze=?, classeEnergetica=?, utente=? WHERE id=?");
+            preparedStatement = conn.prepareStatement("UPDATE Ricerca SET prezzoMinimo=?, prezzoMassimo=?, tipologia=?, citta=?, numeroStanze=?, classeEnergetica=?, utente=? WHERE id=?");
             prepareStatement(ricerca, preparedStatement);
+            preparedStatement.setInt(8, ricerca.getId());
             preparedStatement.execute();
             preparedStatement.close();
             conn.close();
@@ -73,6 +74,8 @@ public class RicercaDAOPostgres implements RicercaDAO {
             throw new AggiornamentoNonRiuscitoException("Aggiornamento ricerca non riuscito");
         }
     }
+
+
 
     public void deleteRicercaById(int id) {
         connection=DBConnection.getDBConnection();
@@ -110,7 +113,7 @@ public class RicercaDAOPostgres implements RicercaDAO {
         List<Ricerca> ricerche = new ArrayList<>(5);
         try{
             preparedStatement=conn.prepareStatement("SELECT ricerca.id, prezzoMinimo, prezzoMassimo, tipologia, citta, numeroStanze, classeEnergetica, utente " +
-                    "FROM Ricerca WHERE utente = ?");
+                    "FROM Ricerca WHERE utente = ? ORDER BY ricerca.id DESC LIMIT 5");
             preparedStatement.setString(1, utente);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
