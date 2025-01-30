@@ -5,11 +5,12 @@ import org.example.dto.Controfferta;
 import java.util.List;
 
 public interface ControffertaDAO {
-    public Controfferta getControffertaById(int id);
-    public void saveControfferta(Controfferta controfferta);
-    public void updateControfferta(Controfferta controfferta);
-    public void deleteControffertaById(int id);
-    public List<Controfferta> getControffertaByUtente(String utente);
-    public List<Controfferta> getControffertaByAgente(String agente);
+    Controfferta getControffertaById(int id);
+    void saveControfferta(Controfferta controfferta);
+    void updateControfferta(Controfferta controfferta);
+    void deleteControffertaById(int id);
+    List<Controfferta> getControffertaByUtente(String utente);
+    List<Controfferta> getControffertaByAgente(String agente);
+    void updateEsitoById(int id, String esito);
 
 }

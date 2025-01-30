@@ -81,7 +81,6 @@ public class GeoApifyUtils {
                     String cat = categories.get(1).toString();
                     int dotInd = cat.indexOf(".");
                     cat = cat.substring(dotInd + 1, cat.length() - 1);
-                    //cat = DeepLUtils.translateDeepL(cat);
                     if(!pointOfInterests.contains(cat))
                         pointOfInterests=pointOfInterests.concat(cat+";");
                 }

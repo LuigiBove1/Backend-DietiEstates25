@@ -70,9 +70,10 @@ public class NotificaDAOPostgres implements NotificaDAO {
         LocalDate data= resultSet.getDate("data").toLocalDate();
         LocalTime ora= resultSet.getTime("ora").toLocalTime();
         String descrizione= resultSet.getString("descrizione");
-        Correlazione correlazione=new Correlazione();
-//        CorrelazioneDAOPostgres visitaDAOPostgres=new CorrelazioneDAOPostgres();
-//        Correlazione visita=correlazioneDAOPostgres.getCorrelazioneById(resultSet.getInt("correlazione"));
+
+        CorrelazioneDAOPostrgres correlazioneDAOPostgres=new CorrelazioneDAOPostrgres();
+        Correlazione correlazione=correlazioneDAOPostgres.getCorrelazioneById(resultSet.getInt("correlazione"));
+
         UtenteDAOPostgres utenteDAOPostgres=new UtenteDAOPostgres();
         Utente utente=utenteDAOPostgres.getUtenteByEmail(resultSet.getString("utente"));
 
@@ -85,11 +86,10 @@ public class NotificaDAOPostgres implements NotificaDAO {
         LocalDate data= resultSet.getDate("data").toLocalDate();
         LocalTime ora= resultSet.getTime("ora").toLocalTime();
         String descrizione= resultSet.getString("descrizione");
-//        VisitaDAOPostgres visitaDAOPostgres=new VisitaDAOPostgres();
-//        Visita visita=visitaDAOPostgres.getVisitaById(resultSet.getInt("visita"));
+        VisitaDAOPostgres visitaDAOPostgres=new VisitaDAOPostgres();
+        Visita visita=visitaDAOPostgres.getVisitaById(resultSet.getInt("visita"));
         UtenteDAOPostgres utenteDAOPostgres=new UtenteDAOPostgres();
         Utente utente=utenteDAOPostgres.getUtenteByEmail(resultSet.getString("utente"));
-        Visita visita=new Visita();
         notifica=new NotificaVisita(id,data,ora,descrizione,utente,visita);
         return notifica;
     }

@@ -107,7 +107,7 @@ public class ImmobileDAOPostgres implements ImmobileDAO {
             throw new CancellazioneNonRiuscitaException("Cancellazione immobile non riuscita");
         }
     }
-
+    @Override
     public int getIdByImmobile(Immobile immobile) {
         connection = DBConnection.getDBConnection();
         Connection conn = connection.getConnection();

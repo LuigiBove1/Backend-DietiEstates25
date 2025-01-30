@@ -40,7 +40,7 @@ public class OffertaDAOPostgres implements OffertaDAO {
     private Offerta extractOffertaFromResultSet(int id, ResultSet resultSet) throws SQLException {
         Offerta offerta;
         int valore= resultSet.getInt("valore");
-        Boolean esito= resultSet.getBoolean("esito");
+        String esito= resultSet.getString("esito");
 
         UtenteDAOPostgres utenteDAOPostgres=new UtenteDAOPostgres();
         AgenteDAOPostgres agenteDAOPostgres=new AgenteDAOPostgres();
@@ -102,7 +102,7 @@ public class OffertaDAOPostgres implements OffertaDAO {
     }
 
     @Override
-    public List<Offerta> getOfferteByUtente(String utente) {
+    public List<Offerta> getOfferteByUtente(String utente) throws NonTrovatoException {
         Connection conn = getConnection();
         PreparedStatement preparedStatement;
         ArrayList<Offerta> offerte = new ArrayList<>();
@@ -123,7 +123,7 @@ public class OffertaDAOPostgres implements OffertaDAO {
     }
 
     @Override
-    public List<Offerta> getOfferteByAgente(String agente) {
+    public List<Offerta> getOfferteByAgente(String agente) throws NonTrovatoException {
         Connection conn = getConnection();
         PreparedStatement preparedStatement;
         ArrayList<Offerta> offerte = new ArrayList<>();
@@ -143,6 +143,23 @@ public class OffertaDAOPostgres implements OffertaDAO {
         return offerte;
     }
 
+    @Override
+    public void updateEsitoById(int id, String esito) throws AggiornamentoNonRiuscitoException {
+        Connection conn = getConnection();
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = conn.prepareStatement("UPDATE offerta SET esito = ? WHERE offerta.id = ?");
+            preparedStatement.setString(1, esito);
+            preparedStatement.setInt(2, id);
+            preparedStatement.execute();
+            preparedStatement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new AggiornamentoNonRiuscitoException("Aggiornamento esito offerta non riuscito");
+        }
+    }
+
+
     private void extractAllFromQuery(PreparedStatement preparedStatement, ArrayList<Offerta> offerte) throws SQLException {
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
@@ -159,7 +176,7 @@ public class OffertaDAOPostgres implements OffertaDAO {
 
     private void prepareStatement(Offerta offerta, PreparedStatement preparedStatement) throws SQLException {
             preparedStatement.setInt(1,offerta.getValore());
-            preparedStatement.setBoolean(2,offerta.getEsito());
+            preparedStatement.setString(2,offerta.getEsito());
             preparedStatement.setString(3,offerta.getUtente().getEmail());
             preparedStatement.setString(4,offerta.getAgente().getEmail());
             preparedStatement.setInt(5,offerta.getInserzione().getId());

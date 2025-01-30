@@ -7,6 +7,7 @@ import org.example.dto.Amministratore;
 import org.example.exceptions.*;
 import org.example.interfaccedao.AgenziaDAO;
 import org.example.interfaccedao.AmministratoreDAO;
+import org.example.utils.CredentialCheckerUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,22 +21,26 @@ public class AmministratoreDAOPostgres implements AmministratoreDAO {
 
             public void saveAmministratore(Amministratore amministratore) throws InserimentoNonRiuscitoException
             {
-                Connection conn = getConnection();
-                PreparedStatement preparedStatement;
+                if(CredentialCheckerUtils.checkPassword(amministratore.getPassword())){
+                    Connection conn = getConnection();
+                    PreparedStatement preparedStatement;
 
-                try{
-                    preparedStatement = conn.prepareStatement("insert into amministratore values(?,?,?)");
-                    preparedStatement(amministratore, preparedStatement);
+                    try{
+                        preparedStatement = conn.prepareStatement("insert into amministratore values(?,?,?)");
+                        preparedStatement(amministratore, preparedStatement);
 
-                    preparedStatement.execute();
-                    preparedStatement.close();
-                    conn.close();
+                        preparedStatement.execute();
+                        preparedStatement.close();
+                        conn.close();
 
 
-                }catch (SQLException throwables) {
-                    throw new InserimentoNonRiuscitoException("inserimento amministratore non riuscito");
-                }catch (Exception exception) {
-                    throw new ConnessioneDataBaseException("errore connessione al database");
+                    }catch (SQLException throwables) {
+                        throw new InserimentoNonRiuscitoException("inserimento amministratore non riuscito");
+                    }catch (Exception exception) {
+                        throw new ConnessioneDataBaseException("errore connessione al database");
+                    }
+                }else{
+                    throw new CredenzialiNonValideException("password non valida");
                 }
             }
 
@@ -54,12 +59,12 @@ public class AmministratoreDAOPostgres implements AmministratoreDAO {
                 ResultSet resultSet;
 
                 try{
-                    preparedStatement = conn.prepareStatement("SELECT * FROM amministratore WHERE amministratore.nomeAdmin=?");
+                    preparedStatement = conn.prepareStatement("SELECT * FROM Amministratore WHERE Amministratore.nomeAdmin=?");
                     preparedStatement.setString(1, nomeAdmin);
                     resultSet = preparedStatement.executeQuery();
                     resultSet.next();
                     String password = resultSet.getString("password");
-                    String nomeAgenzia = resultSet.getString("nomeAgenzia");
+                    String nomeAgenzia = resultSet.getString("agenzia");
                     AgenziaDAO agenziaDAO = new AgenziaDAOPostgres();
                     Agenzia agenzia = agenziaDAO.getAgenziaByNome(nomeAgenzia);
                     amministratore = new Amministratore(nomeAdmin, password, agenzia);
@@ -78,9 +83,9 @@ public class AmministratoreDAOPostgres implements AmministratoreDAO {
                 PreparedStatement preparedStatement;
 
                 try{
-                    preparedStatement = conn.prepareStatement("UPDATE amministratore SET password=?,agenzia=? WHERE nomeAdmin=?");
-                    preparedStatement(amministratore, preparedStatement);
-
+                    preparedStatement = conn.prepareStatement("UPDATE amministratore SET password=?,agenzia=? WHERE amministratore.nomeadmin=?");
+                    preparedStatementUpdate(amministratore, preparedStatement);
+                    preparedStatement.execute();
                     preparedStatement.close();
                     conn.close();
                 }catch (SQLException throwables){
@@ -88,8 +93,14 @@ public class AmministratoreDAOPostgres implements AmministratoreDAO {
                 }
             }
 
+    private void preparedStatementUpdate(Amministratore amministratore, PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setString(1, amministratore.getPassword());
+                preparedStatement.setString(2, amministratore.getAgenzia().getNome());
+                preparedStatement.setString(3, amministratore.getNomeAdmin());
+    }
 
-            public void deleteAmministratoreByNomeAdmin(String nomeAdmin) throws CancellazioneNonRiuscitaException
+
+    public void deleteAmministratoreByNomeAdmin(String nomeAdmin) throws CancellazioneNonRiuscitaException
             {
                 Connection conn = getConnection();
                 PreparedStatement preparedStatement;

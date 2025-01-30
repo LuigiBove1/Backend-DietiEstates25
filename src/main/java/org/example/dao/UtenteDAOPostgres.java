@@ -7,9 +7,6 @@ import org.example.interfaccedao.UtenteDAO;
 import org.example.utils.CredentialCheckerUtils;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
 public class UtenteDAOPostgres implements UtenteDAO {
     DBConnection connection;
 
@@ -122,37 +119,5 @@ public class UtenteDAOPostgres implements UtenteDAO {
     private Connection getConnection() {
         connection= DBConnection.getDBConnection();
         return connection.getConnection();
-    }
-
-
-    public List<Utente> getAllUtenti() throws NonTrovatoException
-    {
-        connection= DBConnection.getDBConnection();
-        Connection conn = connection.getConnection();
-        PreparedStatement preparedStatement;
-        ArrayList<Utente> utenti = new ArrayList<>();
-        ResultSet resultSet;
-        try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM utente");
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String email = resultSet.getString("email");
-                String nome = resultSet.getString("nome");
-                String cognome = resultSet.getString("cognome");
-                String password = resultSet.getString("password");
-                Utente utente = new Utente(nome,cognome,email,password);
-                utenti.add(utente);
-            }
-            preparedStatement.close();
-            conn.close();
-
-        } catch (SQLException throwables) {
-            throw new NonTrovatoException("Nessun utente trovato");
-        }
-        if(utenti.isEmpty())
-        {
-            throw new NonTrovatoException("Nessun utente trovato");
-        }
-        return utenti;
     }
 }

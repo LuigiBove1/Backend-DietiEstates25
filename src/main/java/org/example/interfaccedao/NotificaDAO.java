@@ -5,9 +5,9 @@ import org.example.dto.Notifica;
 import java.util.List;
 
 public interface NotificaDAO {
-    public Notifica getNotificaById(int id);
-    public void saveNotifica(Notifica notifica);
-    public void updateNotifica(Notifica notifica);
-    public void deleteNotificaById(int id);
-    public List<Notifica> getNotificheByUtente(String email);
+    Notifica getNotificaById(int id);
+    void saveNotifica(Notifica notifica);
+    void updateNotifica(Notifica notifica);
+    void deleteNotificaById(int id);
+    List<Notifica> getNotificheByUtente(String email);
 }

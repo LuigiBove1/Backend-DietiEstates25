@@ -4,12 +4,12 @@ import org.example.dto.Agenzia;
 
 public interface AgenziaDAO{
 
-    public Agenzia getAgenziaByNome(String agenzia);
+    Agenzia getAgenziaByNome(String agenzia);
 
-    public void saveAgenzia(Agenzia agenzia);
+    void saveAgenzia(Agenzia agenzia);
 
-    public void updateAgenzia(Agenzia agenzia);
+    void updateAgenzia(Agenzia agenzia);
 
-    public void deleteAgenziaByNome(String agenzia);
+    void deleteAgenziaByNome(String agenzia);
 
 }
