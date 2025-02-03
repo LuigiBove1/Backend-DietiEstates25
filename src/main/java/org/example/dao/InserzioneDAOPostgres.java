@@ -137,6 +137,7 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
 
 
         } catch (SQLException e) {
+
             throw new NonTrovatoException("Nessuna inserzione trovata in base ai parametri");
         }
         if (inserzioni.isEmpty()) {
@@ -224,7 +225,8 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
         ResultSet resultSet = preparedStatement.executeQuery();
         while(resultSet.next()){
             int id = resultSet.getInt("id");
-            inserzioni.add(extractInserzioneFromResultSet(id, resultSet));
+            Inserzione inserzione=extractInserzioneFromResultSet(id, resultSet);
+            inserzioni.add(inserzione);
         }
     }
 

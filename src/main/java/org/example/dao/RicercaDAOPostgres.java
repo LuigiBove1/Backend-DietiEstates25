@@ -29,7 +29,6 @@ public class RicercaDAOPostgres implements RicercaDAO {
             prepareStatement(ricerca, preparedStatement);
             preparedStatement.execute();
             preparedStatement.close();
-            conn.close();
         }catch (SQLException throwables) {
             throw new InserimentoNonRiuscitoException("Inserimento ricerca non riuscito");
         }catch (Exception exception) {

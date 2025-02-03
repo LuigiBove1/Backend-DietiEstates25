@@ -14,6 +14,9 @@ import java.net.http.HttpResponse;
 public class GeoApifyUtils {
     static String apiKey = "4769cc0f976c430fbe66abdf8e32bb70";
 
+    private GeoApifyUtils(){}
+
+
     public static double[] addressToCoordinatesDouble(String address) throws IOException, InterruptedException {
 
         double[] coordinates= new double[2];

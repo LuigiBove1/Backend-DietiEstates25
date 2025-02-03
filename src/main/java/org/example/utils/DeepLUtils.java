@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 public class DeepLUtils {
     public static final String API_KEY = "4d9bcfdb-79e7-4c9e-9fc9-06f8a5386b46:fx";
 
+    private DeepLUtils(){}
     public static String translateDeepL(String stringaDaTradurre) throws IOException, InterruptedException {
 
         String translatedText="";
