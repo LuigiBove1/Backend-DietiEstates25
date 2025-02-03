@@ -72,13 +72,20 @@ public class UtenteDAOPostgres implements UtenteDAO {
         PreparedStatement preparedStatement;
         try {
             preparedStatement = conn.prepareStatement("UPDATE Utente SET nome = ?, cognome = ?, password = ? WHERE email = ?");
-            prepareStatement(utente, preparedStatement);
+            prepareStatementUpdate(utente, preparedStatement);
             preparedStatement.execute();
             preparedStatement.close();
             conn.close();
         } catch (SQLException throwables) {
             throw new AggiornamentoNonRiuscitoException("Aggiornamento utente non riuscito");
         }
+    }
+
+    private void prepareStatementUpdate(Utente utente, PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setString(1, utente.getNome());
+        preparedStatement.setString(2, utente.getCognome());
+        preparedStatement.setString(3, utente.getPassword());
+        preparedStatement.setString(4, utente.getEmail());
     }
 
     public void deleteUtenteByEmail(String email) throws CancellazioneNonRiuscitaException {

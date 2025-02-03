@@ -2,3 +2,4 @@ db.nome=postgres
 db.password=root
 db.url=jdbc:postgresql://localhost:5432/DietiEstates25
 db.driver=org.postgresql.Driver
+key=verysupersecretkey
