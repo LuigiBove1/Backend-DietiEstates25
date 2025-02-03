@@ -2,10 +2,7 @@ package org.example.dao;
 
 import org.example.database.DBConnection;
 import org.example.dto.*;
-import org.example.exceptions.AggiornamentoNonRiuscitoException;
-import org.example.exceptions.CancellazioneNonRiuscitaException;
-import org.example.exceptions.InserimentoNonRiuscitoException;
-import org.example.exceptions.NonTrovatoException;
+import org.example.exceptions.*;
 import org.example.interfaccedao.CorrelazioneDAO;
 
 import java.sql.*;
@@ -31,8 +28,6 @@ public class CorrelazioneDAOPostrgres implements CorrelazioneDAO {
             conn.close();
         } catch (SQLException throwables) {
             throw new InserimentoNonRiuscitoException("Inserimento correlazione non riuscito");
-        }  catch (Exception exception){
-            System.out.println("Errore connessione al db");
         }
 
     }
