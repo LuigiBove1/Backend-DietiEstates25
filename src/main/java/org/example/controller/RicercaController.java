@@ -20,15 +20,11 @@ public class RicercaController {
     @RequireJWTAuthentication
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRicercaById(@PathParam("id") int id) {
+    public Ricerca getRicercaById(@PathParam("id") int id) {
         try {
-            Ricerca ricerca = ricercaDAO.getRicercaById(id);
-            if (ricerca == null) {
-                return Response.status(Response.Status.NOT_FOUND).entity("Ricerca non trovata").build();
-            }
-            return Response.ok(ricerca).build();
+            return ricercaDAO.getRicercaById(id);
         } catch (NonTrovatoException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Ricerca non trovata").build();
+            return null;
         }
     }
 
@@ -38,7 +34,7 @@ public class RicercaController {
         try {
             ricercaDAO.saveRicerca(ricerca);
             return Response.status(Response.Status.CREATED).build();
-        } catch (InserimentoNonRiuscitoException | CredenzialiNonValideException e) {
+        } catch (InserimentoNonRiuscitoException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
@@ -72,15 +68,12 @@ public class RicercaController {
     @RequireJWTAuthentication
     @Path("/utente/{utente}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUltimeRicercheByUtente(@PathParam("utente") String utente) {
+    public List<Ricerca> getUltimeRicercheByUtente(@PathParam("utente") String utente) {
         try {
-            List<Ricerca> ricerche = ricercaDAO.getUltimeRicercheByUtente(utente);
-            if (ricerche.isEmpty()) {
-                return Response.status(Response.Status.NOT_FOUND).entity("Nessuna ricerca trovata per l'utente").build();
-            }
-            return Response.ok(ricerche).build();
+            return ricercaDAO.getUltimeRicercheByUtente(utente);
+
         } catch (NonTrovatoException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Nessuna ricerca trovata per l'utente").build();
+            return List.of();
         }
     }
 }

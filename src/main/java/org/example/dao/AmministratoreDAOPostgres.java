@@ -143,10 +143,10 @@ public class AmministratoreDAOPostgres implements AmministratoreDAO {
                 PreparedStatement preparedStatement;
 
                 try{
-                    preparedStatement = conn.prepareStatement("UPDATE amministratore SET password=? WHERE nomeAdmin=?");
+                    preparedStatement = conn.prepareStatement("UPDATE amministratore SET password=? WHERE nomeadmin=?");
                     preparedStatement.setString(1, password);
                     preparedStatement.setString(2, nomeAdmin);
-
+                    preparedStatement.execute();
                     preparedStatement.close();
                     conn.close();
                 }catch (SQLException throwables){

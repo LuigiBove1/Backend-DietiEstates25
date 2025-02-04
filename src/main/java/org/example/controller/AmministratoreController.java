@@ -23,7 +23,7 @@ public class AmministratoreController {
             Amministratore amministratore = amministratoreDAO.getAmministratoreByNomeAdmin(nomeAdmin);
             return Response.ok(amministratore).build();
         } catch (NonTrovatoException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Amministratore non trovato").build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -65,7 +65,7 @@ public class AmministratoreController {
 
     @PUT
     @RequireJWTAuthentication
-    @Path("/password/{nomeAdmin}/{password}")
+    @Path("/nomeAdmin/{nomeAdmin}/password/{password}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updatePasswordByNomeAdmin(@PathParam("nomeAdmin") String nomeAdmin, @PathParam("password") String password){
         try {
