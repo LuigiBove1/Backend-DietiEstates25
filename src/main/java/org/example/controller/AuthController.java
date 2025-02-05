@@ -26,8 +26,6 @@ import org.example.interfaccedao.UtenteDAO;
 import java.io.IOException;
 
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Properties;
 import java.util.UUID;
@@ -56,7 +54,7 @@ public class AuthController {
         try
         {
             Properties properties = new Properties();
-            InputStream input = Files.newInputStream(Paths.get("credenziali.txt"));
+            InputStream input = AuthController.class.getClassLoader().getResourceAsStream("credentials.properties");
             properties.load(input);
             String key = properties.getProperty("key");
             algorithm = Algorithm.HMAC256(key);
