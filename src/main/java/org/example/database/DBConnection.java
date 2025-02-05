@@ -2,9 +2,11 @@ package org.example.database;
 
 
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -38,7 +40,7 @@ public class DBConnection {
         try
         {
             Properties properties = new Properties();
-            FileInputStream input = new FileInputStream("src/main/java/org/example/database/credenziali.txt");
+            InputStream input = Files.newInputStream(Paths.get("credenziali.txt"));
             properties.load(input);
 
 
