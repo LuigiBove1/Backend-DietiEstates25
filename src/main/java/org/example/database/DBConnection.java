@@ -1,5 +1,7 @@
 package org.example.database;
 
+
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,9 +9,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DBConnection {
-
+    private static final Logger LOGGER = Logger.getLogger(DBConnection.class.getName());
     private static DBConnection dbcon = null;
 
     private  Connection conn = null;
@@ -50,11 +54,12 @@ public class DBConnection {
                 conn = DriverManager.getConnection(url, nome, password);
             }
         } catch (SQLException | ClassNotFoundException  throwables) {
-            System.out.println("Errore connessione al database!");
+            LOGGER.log(Level.SEVERE,"Errore connessione al database!", throwables);
         } catch (FileNotFoundException e) {
-            System.out.println("Errore lettura file credenziali!");
+            LOGGER.log(Level.SEVERE,"Errore lettura file credenziali!", e);
+
         } catch (IOException e) {
-            System.out.println("Errore caricamento file credenziali!");
+            LOGGER.log(Level.SEVERE,"Errore caricamento file credenziali!", e);
         }
 
         return conn;

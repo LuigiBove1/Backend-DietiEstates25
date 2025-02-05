@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import jakarta.ws.rs.Consumes;
@@ -30,16 +30,20 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Path("auth")
 public class AuthController {
 
     private static final String ISSUER = "dietiestates-api";
+    public static final String PROPERTY_TOKEN = "token";
     private static Algorithm algorithm;
     private static JWTVerifier verifier;
     private final UtenteDAO utenteDAO = new UtenteDAOPostgres();
     private final AgenteDAO agenteDAO = new AgenteDAOPostgres();
     private final AmministratoreDAO amministratoreDAO = new AmministratoreDAOPostgres();
+    private static final Logger LOGGER = Logger.getLogger(AuthController.class.getName());
 
     static {
         initializeVerifier();
@@ -56,7 +60,7 @@ public class AuthController {
             algorithm = Algorithm.HMAC256(key);
             verifier = JWT.require(algorithm).withIssuer(ISSUER).build();
         } catch (IOException e) {
-            System.out.println("Errore nella lettura della key");
+            LOGGER.log(Level.SEVERE,"Errore nella lettura della key", e);
         }
     }
 
@@ -78,7 +82,7 @@ public class AuthController {
             user=utenteDAO.getUtenteByEmail(email);
             String jsonResponse = new Gson().toJson(user);
             JsonObject jsonObject= new Gson().fromJson(jsonResponse, JsonObject.class);
-            jsonObject.addProperty("token",token);
+            jsonObject.addProperty(PROPERTY_TOKEN,token);
 
             return Response
                     .status(Response.Status.OK)
@@ -109,7 +113,7 @@ public class AuthController {
             agente=agenteDAO.getAgenteByEmail(email);
             String jsonResponse = new Gson().toJson(agente);
             JsonObject jsonObject= new Gson().fromJson(jsonResponse, JsonObject.class);
-            jsonObject.addProperty("token",token);
+            jsonObject.addProperty(PROPERTY_TOKEN,token);
 
             return Response
                     .status(Response.Status.OK)
@@ -138,7 +142,7 @@ public class AuthController {
             amministratore=amministratoreDAO.getAmministratoreByNomeAdmin(nomeAdmin);
             String jsonResponse = new Gson().toJson(amministratore);
             JsonObject jsonObject= new Gson().fromJson(jsonResponse, JsonObject.class);
-            jsonObject.addProperty("token",token);
+            jsonObject.addProperty(PROPERTY_TOKEN,token);
 
             return Response
                     .status(Response.Status.OK)
@@ -153,23 +157,21 @@ public class AuthController {
 
     private String createJWT(String username, long ttlMillis) {
 
-        String token = JWT.create()
+        return JWT.create()
                 .withIssuer(ISSUER)
                 .withClaim("username", username)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + ttlMillis))
                 .withJWTId(UUID.randomUUID().toString())
                 .sign(algorithm);
-
-        return token;
     }
 
     public static boolean validateToken(String token){
         try {
-            DecodedJWT decodedJWT = verifier.verify(token);
+            verifier.verify(token);
             return true;
         } catch (JWTVerificationException e) {
-            System.out.println(e.getMessage());
+            LOGGER.log(Level.SEVERE,e.getMessage());
             return false;
         }
     }

@@ -17,7 +17,7 @@ public class MyResourceTest {
     private WebTarget target;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         // start the server
         server = Main.startServer();
         // create the client
@@ -27,13 +27,13 @@ public class MyResourceTest {
         // support for JSON in the client (you also have to uncomment
         // dependency on jersey-media-json module in pom.xml and Main.startServer())
         // --
-        // c.configuration().enable(new org.glassfish.jersey.media.json.JsonJaxbFeature());
+
 
         target = c.target(Main.BASE_URI);
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         server.stop();
     }
 

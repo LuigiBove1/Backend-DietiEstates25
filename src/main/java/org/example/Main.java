@@ -1,11 +1,14 @@
 package org.example;
 
+
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Main class.
@@ -14,7 +17,7 @@ import java.net.URI;
 public class Main {
     // Base URI the Grizzly HTTP server will listen on
     public static final String BASE_URI = "http://0.0.0.0:8080/api/1.0/";
-
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
     /**
      * Starts Grizzly HTTP server exposing JAX-RS resources defined in this application.
      * @return Grizzly HTTP server.
@@ -36,8 +39,9 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
         final HttpServer server = startServer();
-        System.out.println(String.format("Jersey app started with endpoints available at "
+        LOGGER.log(Level.INFO,String.format("Jersey app started with endpoints available at "
                 + "%s%nHit Ctrl-C to stop it...", BASE_URI));
+        System.out.println();
         System.in.read();
         server.stop();
     }
