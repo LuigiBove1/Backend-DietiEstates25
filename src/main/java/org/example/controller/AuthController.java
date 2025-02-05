@@ -54,7 +54,7 @@ public class AuthController {
         try
         {
             Properties properties = new Properties();
-            InputStream input = AuthController.class.getClassLoader().getResourceAsStream("credentials.properties");
+            InputStream input = AuthController.class.getClassLoader().getResourceAsStream("credenziali.txt");
             properties.load(input);
             String key = properties.getProperty("key");
             algorithm = Algorithm.HMAC256(key);
