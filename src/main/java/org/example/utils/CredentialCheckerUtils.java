@@ -8,7 +8,7 @@ public class CredentialCheckerUtils {
     }
 
     public static boolean checkPassword(String password) {
-        return password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
+        return password.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
     }
     public static boolean checkCredentials(String email, String password) {
         return checkEmail(email) && checkPassword(password);

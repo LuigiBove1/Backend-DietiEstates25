@@ -55,7 +55,7 @@ public class AgenteDAOPostgres implements AgenteDAO {
         ResultSet resultSet;
         Agente agente;
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM Agente WHERE agente.email = ?");
+            preparedStatement = conn.prepareStatement("SELECT nome,cognome,password,agenzia FROM Agente WHERE agente.email = ?");
             preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -118,7 +118,7 @@ public class AgenteDAOPostgres implements AgenteDAO {
         PreparedStatement preparedStatement;
         ResultSet resultSet;
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM Agente WHERE agente.email = ? AND agente.password = ?");
+            preparedStatement = conn.prepareStatement("SELECT email,nome,cognome,password FROM Agente WHERE agente.email = ? AND agente.password = ?");
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();
