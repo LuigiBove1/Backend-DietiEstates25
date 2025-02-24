@@ -159,7 +159,7 @@ public class ImmobileDAOPostgres implements ImmobileDAO {
             immobile.setLongitude(coordinates[0]);
             String pointsOfInterest = GeoApifyUtils.getPOIFromCoordinates(immobile.getLatitude(), immobile.getLongitude());
             immobile.setPuntiDiInteresse(pointsOfInterest);
-        } catch (IOException | InterruptedException e) {
+        } catch (Exception e) {
             coordinates[0] = 0;
             coordinates[1] = 0;
         }

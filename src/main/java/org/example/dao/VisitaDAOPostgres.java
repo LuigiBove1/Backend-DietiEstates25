@@ -72,7 +72,7 @@ public class VisitaDAOPostgres implements VisitaDAO {
         ResultSet resultSet;
         Visita visita;
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM Visita WHERE visita.id = ?");
+            preparedStatement = conn.prepareStatement("SELECT id,esito,ora,data FROM Visita WHERE visita.id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();

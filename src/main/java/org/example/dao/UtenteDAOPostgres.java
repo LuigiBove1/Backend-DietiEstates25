@@ -50,7 +50,7 @@ public class UtenteDAOPostgres implements UtenteDAO {
         ResultSet resultSet;
         Utente utente;
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM Utente WHERE utente.email = ?");
+            preparedStatement = conn.prepareStatement("SELECT nome,cognome,email,password FROM Utente WHERE utente.email = ?");
             preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -108,7 +108,7 @@ public class UtenteDAOPostgres implements UtenteDAO {
         PreparedStatement preparedStatement;
         ResultSet resultSet;
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM Utente WHERE utente.email = ? AND utente.password = ?");
+            preparedStatement = conn.prepareStatement("SELECT email,nome,cognome,password FROM Utente WHERE utente.email = ? AND utente.password = ?");
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();

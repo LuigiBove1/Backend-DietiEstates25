@@ -293,10 +293,10 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
             preparedStatement.close();
             conn.close();
         } catch (SQLException e) {
-            throw new NonTrovatoException("Nessuna inserzione trovata in base all'indirizzo e al raggio");
+            throw new NonTrovatoException("Nessuna inserzione trovata in base alle coordinate e al raggio");
         }
         if(inserzioniNelRaggio.isEmpty()){
-            throw new NonTrovatoException("Nessuna inserzione trovata in base all'indirizzo e al raggio");
+            throw new NonTrovatoException("Nessuna inserzione trovata in base alle coordinate e al raggio");
         }
         return inserzioniNelRaggio;
     }
@@ -308,7 +308,7 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
         double[] coordinates;
         try{
             coordinates= GeoApifyUtils.addressToCoordinatesDouble(indirizzo);
-        }catch(IOException | InterruptedException e){
+        }catch(Exception e){
             throw new NonTrovatoException("Coordinate non trovate");
         }
         double lat1=coordinates[0];

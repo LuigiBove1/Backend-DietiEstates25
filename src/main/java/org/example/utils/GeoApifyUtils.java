@@ -51,8 +51,8 @@ public class GeoApifyUtils {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         JsonObject root = JsonParser.parseString(response.body()).getAsJsonObject();
-        JsonArray features = root.getAsJsonArray("features");
-        return features;
+        return root.getAsJsonArray("features");
+
     }
 
     public static String getPOIFromCoordinates(double latitude, double longitude) throws IOException, InterruptedException {

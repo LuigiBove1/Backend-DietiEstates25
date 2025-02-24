@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OffertaDAOPostgres implements OffertaDAO {
+    public static final String offerteLbl = "Offerte ricevute da";
+    public static final String nonTrovateLbl = "non trovate";
     DBConnection connection;
     @Override
     public Offerta getOffertaById(int id) throws NonTrovatoException {
@@ -107,17 +109,17 @@ public class OffertaDAOPostgres implements OffertaDAO {
         PreparedStatement preparedStatement;
         ArrayList<Offerta> offerte = new ArrayList<>();
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM offerta WHERE offerta.utente = ?");
+            preparedStatement = conn.prepareStatement("SELECT id,valore,esito,utente,agente,inserzione FROM offerta WHERE offerta.utente = ?");
             preparedStatement.setString(1, utente);
             extractAllFromQuery(preparedStatement, offerte);
             preparedStatement.close();
             conn.close();
 
         } catch (SQLException e) {
-            throw new NonTrovatoException("Offerte ricevute da"+ utente +"non trovate");
+            throw new NonTrovatoException(offerteLbl + utente + nonTrovateLbl);
         }
         if(offerte.isEmpty()){
-            throw new NonTrovatoException("Offerte ricevute da"+ utente +"non trovate");
+            throw new NonTrovatoException(offerteLbl + utente + nonTrovateLbl);
         }
         return offerte;
     }
@@ -128,17 +130,17 @@ public class OffertaDAOPostgres implements OffertaDAO {
         PreparedStatement preparedStatement;
         ArrayList<Offerta> offerte = new ArrayList<>();
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM offerta WHERE offerta.agente = ?");
+            preparedStatement = conn.prepareStatement("SELECT id,valore,esito,utente,agente,inserzione FROM offerta WHERE offerta.agente = ?");
             preparedStatement.setString(1, agente);
             extractAllFromQuery(preparedStatement, offerte);
             preparedStatement.close();
             conn.close();
 
         } catch (SQLException e) {
-            throw new NonTrovatoException("Offerte ricevute da"+ agente +"non trovate");
+            throw new NonTrovatoException(offerteLbl + agente + nonTrovateLbl);
         }
         if(offerte.isEmpty()){
-            throw new NonTrovatoException("Offerte ricevute da"+ agente +"non trovate");
+            throw new NonTrovatoException(offerteLbl + agente + nonTrovateLbl);
         }
         return offerte;
     }

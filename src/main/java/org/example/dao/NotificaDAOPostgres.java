@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NotificaDAOPostgres implements NotificaDAO {
+    public static final String visitaLbl = "visita";
+    public static final String utenteLbl = "utente";
+    public static final String correlazioneLbl = "correlazione";
+    public static final String descrizioneLbl = "descrizione";
     DBConnection connection;
 
 
@@ -44,9 +48,9 @@ public class NotificaDAOPostgres implements NotificaDAO {
         Notifica notifica;
         String tipoNotifica = resultSet.getString("tipo");
 
-        if(tipoNotifica.equals("visita")){
+        if(tipoNotifica.equals(visitaLbl)){
             notifica = extractNotificaVisitaFromResultSet(id, resultSet);
-        } else if (tipoNotifica.equals("correlazione")) {
+        } else if (tipoNotifica.equals(correlazioneLbl)) {
             notifica = extractNotificaCorrelazioneFromResultSet(id, resultSet);
         }else{
             notifica = extractNotificaPromozionaleFromResultSet(id, resultSet);
@@ -58,9 +62,9 @@ public class NotificaDAOPostgres implements NotificaDAO {
         Notifica notifica;
         LocalDate data= resultSet.getDate("data").toLocalDate();
         LocalTime ora= resultSet.getTime("ora").toLocalTime();
-        String descrizione= resultSet.getString("descrizione");
+        String descrizione= resultSet.getString(descrizioneLbl);
         UtenteDAOPostgres utenteDAOPostgres=new UtenteDAOPostgres();
-        Utente utente=utenteDAOPostgres.getUtenteByEmail(resultSet.getString("utente"));
+        Utente utente=utenteDAOPostgres.getUtenteByEmail(resultSet.getString(utenteLbl));
         notifica=new NotificaPromozionale(id,data,ora,descrizione,utente);
         return notifica;
     }
@@ -69,13 +73,13 @@ public class NotificaDAOPostgres implements NotificaDAO {
         Notifica notifica;
         LocalDate data= resultSet.getDate("data").toLocalDate();
         LocalTime ora= resultSet.getTime("ora").toLocalTime();
-        String descrizione= resultSet.getString("descrizione");
+        String descrizione= resultSet.getString(descrizioneLbl);
 
         CorrelazioneDAOPostrgres correlazioneDAOPostgres=new CorrelazioneDAOPostrgres();
-        Correlazione correlazione=correlazioneDAOPostgres.getCorrelazioneById(resultSet.getInt("correlazione"));
+        Correlazione correlazione=correlazioneDAOPostgres.getCorrelazioneById(resultSet.getInt(correlazioneLbl));
 
         UtenteDAOPostgres utenteDAOPostgres=new UtenteDAOPostgres();
-        Utente utente=utenteDAOPostgres.getUtenteByEmail(resultSet.getString("utente"));
+        Utente utente=utenteDAOPostgres.getUtenteByEmail(resultSet.getString(utenteLbl));
 
         notifica=new NotificaCorrelazione(id,data,ora,descrizione,utente,correlazione);
         return notifica;
@@ -85,11 +89,11 @@ public class NotificaDAOPostgres implements NotificaDAO {
         Notifica notifica;
         LocalDate data= resultSet.getDate("data").toLocalDate();
         LocalTime ora= resultSet.getTime("ora").toLocalTime();
-        String descrizione= resultSet.getString("descrizione");
+        String descrizione= resultSet.getString(descrizioneLbl);
         VisitaDAOPostgres visitaDAOPostgres=new VisitaDAOPostgres();
-        Visita visita=visitaDAOPostgres.getVisitaById(resultSet.getInt("visita"));
+        Visita visita=visitaDAOPostgres.getVisitaById(resultSet.getInt(visitaLbl));
         UtenteDAOPostgres utenteDAOPostgres=new UtenteDAOPostgres();
-        Utente utente=utenteDAOPostgres.getUtenteByEmail(resultSet.getString("utente"));
+        Utente utente=utenteDAOPostgres.getUtenteByEmail(resultSet.getString(utenteLbl));
         notifica=new NotificaVisita(id,data,ora,descrizione,utente,visita);
         return notifica;
     }
@@ -124,7 +128,7 @@ public class NotificaDAOPostgres implements NotificaDAO {
         preparedStatement.setDate(1, Date.valueOf(notifica.getData()));
         preparedStatement.setTime(2, Time.valueOf(notifica.getOra()));
         preparedStatement.setString(3, notifica.getDescrizione());
-        preparedStatement.setString(4, "visita");
+        preparedStatement.setString(4, visitaLbl);
         preparedStatement.setString(5, notifica.getUtente().getEmail());
         preparedStatement.setInt(6, ((NotificaVisita) notifica).getVisita().getId());
         preparedStatement.execute();
@@ -138,7 +142,7 @@ public class NotificaDAOPostgres implements NotificaDAO {
         preparedStatement.setDate(1, Date.valueOf(notifica.getData()));
         preparedStatement.setTime(2, Time.valueOf(notifica.getOra()));
         preparedStatement.setString(3, notifica.getDescrizione());
-        preparedStatement.setString(4, "correlazione");
+        preparedStatement.setString(4, correlazioneLbl);
         preparedStatement.setString(5, notifica.getUtente().getEmail());
         preparedStatement.setInt(6, ((NotificaCorrelazione) notifica).getCorrelazione().getId());
         preparedStatement.execute();

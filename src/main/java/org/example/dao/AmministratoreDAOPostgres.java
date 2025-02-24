@@ -59,7 +59,7 @@ public class AmministratoreDAOPostgres implements AmministratoreDAO {
                 ResultSet resultSet;
 
                 try{
-                    preparedStatement = conn.prepareStatement("SELECT * FROM Amministratore WHERE Amministratore.nomeAdmin=?");
+                    preparedStatement = conn.prepareStatement("SELECT nomeadmin,password,agenzia FROM Amministratore WHERE Amministratore.nomeAdmin=?");
                     preparedStatement.setString(1, nomeAdmin);
                     resultSet = preparedStatement.executeQuery();
                     resultSet.next();
@@ -124,7 +124,7 @@ public class AmministratoreDAOPostgres implements AmministratoreDAO {
                 ResultSet resultSet;
 
                 try{
-                    preparedStatement = conn.prepareStatement("SELECT * FROM amministratore WHERE amministratore.nomeAdmin=? AND password=?");
+                    preparedStatement = conn.prepareStatement("SELECT nomeadmin,password,agenzia FROM amministratore WHERE amministratore.nomeAdmin=? AND password=?");
                     preparedStatement.setString(1, nomeAdmin);
                     preparedStatement.setString(2, password);
                     resultSet = preparedStatement.executeQuery();

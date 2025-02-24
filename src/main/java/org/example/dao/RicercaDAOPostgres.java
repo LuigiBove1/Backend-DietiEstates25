@@ -44,7 +44,8 @@ public class RicercaDAOPostgres implements RicercaDAO {
         ResultSet resultSet;
         Ricerca ricerca;
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM Ricerca WHERE ricerca.id = ?");
+            preparedStatement = conn.prepareStatement("SELECT id,prezzomassimo,prezzominimo,tipologia,citta,classeenergetica,utente" +
+                    " FROM Ricerca WHERE ricerca.id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();

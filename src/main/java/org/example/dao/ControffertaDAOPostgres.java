@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ControffertaDAOPostgres implements ControffertaDAO {
+    public static final String nonTrovatelbl = "non trovate";
+    public static final String controffertelbl = "Controfferte ricevute da";
     DBConnection connection;
 
     @Override
@@ -116,17 +118,17 @@ public class ControffertaDAOPostgres implements ControffertaDAO {
         PreparedStatement preparedStatement;
         ArrayList<Controfferta> controfferte = new ArrayList<>();
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM controfferta WHERE controfferta.utente = ?");
+            preparedStatement = conn.prepareStatement("SELECT id,valore,esito,utente,agente,inserzione FROM controfferta WHERE controfferta.utente = ?");
             preparedStatement.setString(1, utente);
             ResultSet resultSet = preparedStatement.executeQuery();
             extractAllFromResultSet(resultSet, controfferte);
             preparedStatement.close();
             conn.close();
         } catch (SQLException e) {
-            throw new NonTrovatoException("Controfferte ricevute da" + utente + "non trovate");
+            throw new NonTrovatoException(controffertelbl + utente + nonTrovatelbl);
         }
         if (controfferte.isEmpty()) {
-            throw new NonTrovatoException("Controfferte ricevute da" + utente + "non trovate");
+            throw new NonTrovatoException(controffertelbl + utente + nonTrovatelbl);
         }
         return controfferte;
     }
@@ -137,17 +139,17 @@ public class ControffertaDAOPostgres implements ControffertaDAO {
         PreparedStatement preparedStatement;
         ArrayList<Controfferta> controfferte = new ArrayList<>();
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM controfferta WHERE controfferta.agente = ?");
+            preparedStatement = conn.prepareStatement("SELECT id,valore,esito,utente,agente,inserzione FROM controfferta WHERE controfferta.agente = ?");
             preparedStatement.setString(1, agente);
             ResultSet resultSet = preparedStatement.executeQuery();
             extractAllFromResultSet(resultSet, controfferte);
             preparedStatement.close();
             conn.close();
         } catch (SQLException e) {
-            throw new NonTrovatoException("Controfferte ricevute da" + agente + "non trovate");
+            throw new NonTrovatoException(controffertelbl + agente + nonTrovatelbl);
         }
         if (controfferte.isEmpty()) {
-            throw new NonTrovatoException("Controfferte ricevute da" + agente + "non trovate");
+            throw new NonTrovatoException(controffertelbl + agente + nonTrovatelbl);
         }
         return controfferte;
     }

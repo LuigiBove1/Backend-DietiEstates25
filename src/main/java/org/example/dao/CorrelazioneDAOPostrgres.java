@@ -45,7 +45,7 @@ public class CorrelazioneDAOPostrgres implements CorrelazioneDAO {
         ResultSet resultSet;
         Correlazione correlazione;
         try {
-            preparedStatement = conn.prepareStatement("SELECT * FROM correlazione WHERE correlazione.id = ?");
+            preparedStatement = conn.prepareStatement("SELECT id,data,ora,inserzione,ricerca FROM correlazione WHERE correlazione.id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
