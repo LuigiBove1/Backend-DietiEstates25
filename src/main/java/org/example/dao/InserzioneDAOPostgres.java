@@ -14,7 +14,7 @@ import org.example.interfaccedao.InserzioneDAO;
 import org.example.interfaccedao.RicercaDAO;
 import org.example.utils.GeoApifyUtils;
 
-import java.io.IOException;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.Connection;
@@ -309,6 +309,7 @@ public class InserzioneDAOPostgres implements InserzioneDAO {
         try{
             coordinates= GeoApifyUtils.addressToCoordinatesDouble(indirizzo);
         }catch(Exception e){
+            Thread.currentThread().interrupt();
             throw new NonTrovatoException("Coordinate non trovate");
         }
         double lat1=coordinates[0];

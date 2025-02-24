@@ -27,21 +27,21 @@ public class JWTAuthenticationFilter implements ContainerRequestFilter {
         LOGGER.log(Level.INFO,"Filtering request");
         // Get the HTTP Authorization header from the request
         String authorizationHeader = containerRequestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-        LOGGER.log(Level.INFO,"Authorization header: "+authorizationHeader);
+        LOGGER.log(Level.INFO,String.format("Authorization header: %s",authorizationHeader));
 
 
         // Check if the HTTP Authorization header is present and formatted correctly
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            LOGGER.log(Level.WARNING,"Invalid authorization header: "+authorizationHeader);
+            LOGGER.log(Level.WARNING,String.format("Invalid authorization header: %s",authorizationHeader));
             throw new NotAuthorizedException("Authorization header must be provided");
         }
 
         String token = authorizationHeader.substring("Bearer".length()).trim();
 
         if( AuthController.validateToken(token) ){
-            LOGGER.log(Level.INFO,"Token is valid: "+token);
+            LOGGER.log(Level.INFO,String.format("Token is valid: %s",token));
         } else {
-            LOGGER.log(Level.WARNING,"Token is not valid: "+token);
+            LOGGER.log(Level.WARNING,String.format("Token is not valid: %s",token));
 
             containerRequestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
         }

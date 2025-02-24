@@ -9,8 +9,8 @@ import org.example.exceptions.CancellazioneNonRiuscitaException;
 import org.example.exceptions.InserimentoNonRiuscitoException;
 import org.example.exceptions.NonTrovatoException;
 
-import java.io.IOException;
 import java.sql.*;
+import java.io.IOException;
 
 public class ImmobileDAOPostgres implements ImmobileDAO {
     DBConnection connection;
@@ -159,9 +159,10 @@ public class ImmobileDAOPostgres implements ImmobileDAO {
             immobile.setLongitude(coordinates[0]);
             String pointsOfInterest = GeoApifyUtils.getPOIFromCoordinates(immobile.getLatitude(), immobile.getLongitude());
             immobile.setPuntiDiInteresse(pointsOfInterest);
-        } catch (Exception e) {
+        } catch (IOException | InterruptedException e) {
             coordinates[0] = 0;
             coordinates[1] = 0;
+            Thread.currentThread().interrupt();
         }
     }
 }
