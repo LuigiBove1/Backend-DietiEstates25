@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OffertaDAOPostgres implements OffertaDAO {
-    public static final String offerteLbl = "Offerte ricevute da";
-    public static final String nonTrovateLbl = "non trovate";
+    public static final String OFFERTE_LBL = "Offerte ricevute da";
+    public static final String NON_TROVATE_LBL = "non trovate";
     DBConnection connection;
     @Override
     public Offerta getOffertaById(int id) throws NonTrovatoException {
@@ -116,10 +116,10 @@ public class OffertaDAOPostgres implements OffertaDAO {
             conn.close();
 
         } catch (SQLException e) {
-            throw new NonTrovatoException(offerteLbl + utente + nonTrovateLbl);
+            throw new NonTrovatoException(OFFERTE_LBL + utente + NON_TROVATE_LBL);
         }
         if(offerte.isEmpty()){
-            throw new NonTrovatoException(offerteLbl + utente + nonTrovateLbl);
+            throw new NonTrovatoException(OFFERTE_LBL + utente + NON_TROVATE_LBL);
         }
         return offerte;
     }
@@ -137,10 +137,10 @@ public class OffertaDAOPostgres implements OffertaDAO {
             conn.close();
 
         } catch (SQLException e) {
-            throw new NonTrovatoException(offerteLbl + agente + nonTrovateLbl);
+            throw new NonTrovatoException(OFFERTE_LBL + agente + NON_TROVATE_LBL);
         }
         if(offerte.isEmpty()){
-            throw new NonTrovatoException(offerteLbl + agente + nonTrovateLbl);
+            throw new NonTrovatoException(OFFERTE_LBL + agente + NON_TROVATE_LBL);
         }
         return offerte;
     }

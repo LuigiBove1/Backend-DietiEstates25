@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ControffertaDAOPostgres implements ControffertaDAO {
-    public static final String nonTrovatelbl = "non trovate";
-    public static final String controffertelbl = "Controfferte ricevute da";
+    public static final String NON_TROVATELBL = "non trovate";
+    public static final String CONTROFFERTELBL = "Controfferte ricevute da";
     DBConnection connection;
 
     @Override
@@ -125,10 +125,10 @@ public class ControffertaDAOPostgres implements ControffertaDAO {
             preparedStatement.close();
             conn.close();
         } catch (SQLException e) {
-            throw new NonTrovatoException(controffertelbl + utente + nonTrovatelbl);
+            throw new NonTrovatoException(CONTROFFERTELBL + utente + NON_TROVATELBL);
         }
         if (controfferte.isEmpty()) {
-            throw new NonTrovatoException(controffertelbl + utente + nonTrovatelbl);
+            throw new NonTrovatoException(CONTROFFERTELBL + utente + NON_TROVATELBL);
         }
         return controfferte;
     }
@@ -146,10 +146,10 @@ public class ControffertaDAOPostgres implements ControffertaDAO {
             preparedStatement.close();
             conn.close();
         } catch (SQLException e) {
-            throw new NonTrovatoException(controffertelbl + agente + nonTrovatelbl);
+            throw new NonTrovatoException(CONTROFFERTELBL + agente + NON_TROVATELBL);
         }
         if (controfferte.isEmpty()) {
-            throw new NonTrovatoException(controffertelbl + agente + nonTrovatelbl);
+            throw new NonTrovatoException(CONTROFFERTELBL + agente + NON_TROVATELBL);
         }
         return controfferte;
     }
