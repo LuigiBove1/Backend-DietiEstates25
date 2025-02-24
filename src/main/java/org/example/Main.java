@@ -39,9 +39,10 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
         final HttpServer server = startServer();
-        LOGGER.log(Level.INFO,String.format("Jersey app started with endpoints available at "
-                + "%s%nHit Ctrl-C to stop it...", BASE_URI));
-
+        if(LOGGER.isLoggable(Level.INFO)) {
+            LOGGER.log(Level.INFO, String.format("Jersey app started with endpoints available at "
+                    + "%s%nHit Ctrl-C to stop it...", BASE_URI));
+        }
         System.in.read();
         server.stop();
     }

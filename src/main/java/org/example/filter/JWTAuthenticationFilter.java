@@ -27,21 +27,33 @@ public class JWTAuthenticationFilter implements ContainerRequestFilter {
         LOGGER.log(Level.INFO,"Filtering request");
         // Get the HTTP Authorization header from the request
         String authorizationHeader = containerRequestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-        LOGGER.log(Level.INFO,String.format("Authorization header: %s",authorizationHeader));
+        if(LOGGER.isLoggable(Level.INFO)){
+            LOGGER.log(Level.INFO,String.format("Authorization header: %s",authorizationHeader));
+        }
+
 
 
         // Check if the HTTP Authorization header is present and formatted correctly
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            LOGGER.log(Level.WARNING,String.format("Invalid authorization header: %s",authorizationHeader));
+            if(LOGGER.isLoggable(Level.WARNING)){
+                LOGGER.log(Level.WARNING,String.format("Invalid authorization header: %s",authorizationHeader));
+            }
+
             throw new NotAuthorizedException("Authorization header must be provided");
         }
 
         String token = authorizationHeader.substring("Bearer".length()).trim();
 
         if( AuthController.validateToken(token) ){
-            LOGGER.log(Level.INFO,String.format("Token is valid: %s",token));
+            if (LOGGER.isLoggable(Level.INFO)){
+                LOGGER.log(Level.INFO,String.format("Token is valid: %s",token));
+            }
+
         } else {
-            LOGGER.log(Level.WARNING,String.format("Token is not valid: %s",token));
+            if (LOGGER.isLoggable(Level.WARNING)){
+                LOGGER.log(Level.WARNING,String.format("Token is not valid: %s",token));
+            }
+
 
             containerRequestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
         }
